@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Project — Senith B.</title>
+<meta name="description" content="Case study detail page.">
+<script>
+(function () {
+  try {
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  } catch (e) {}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></symbol>
+  <symbol id="icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+  <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></symbol>
+  <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+</svg>
+
+<header class="site-header" id="siteHeader">
+  <div class="container">
+    <a href="index.html#home" class="logo">Senith<span> B.</span></a>
+    <div class="nav-wrap">
+      <nav>
+        <ul class="nav-list" id="navList">
+          <li><a href="index.html#work" class="active">Work</a></li>
+          <li><a href="index.html#case-studies">Case Studies</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#evangelizing">UX Evangelizing</a></li>
+          <li><a href="index.html#about">About Me</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Switch to light theme" aria-pressed="false">
+        <svg class="icon-sun"><use href="#icon-sun"/></svg>
+        <svg class="icon-moon"><use href="#icon-moon"/></svg>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="project-hero">
+    <div class="container" data-reveal-group>
+      <a href="index.html#work" class="project-back reveal" id="projectBackLink"><svg width="16" height="16"><use href="#icon-arrow-left"/></svg> <span id="projectBackLabel">Back to Work</span></a>
+      <span class="kicker reveal" id="projectCategory">UX &amp; Product</span>
+      <h1 class="reveal" id="projectTitle">Project Title</h1>
+      <p class="reveal" id="projectSummary">Project summary goes here.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="project-cover reveal" id="projectCover"></div>
+
+    <div class="project-meta" data-reveal-group>
+      <div class="reveal"><span>Client</span><strong id="metaClient">—</strong></div>
+      <div class="reveal"><span>Role</span><strong id="metaRole">—</strong></div>
+      <div class="reveal"><span id="metaTimelineLabel">Timeline</span><strong id="metaTimeline">—</strong></div>
+      <div class="reveal"><span>Tools</span><strong id="metaTools">—</strong></div>
+    </div>
+
+    <!-- Sourcing note — states what the case study draws on and what stays
+         with the client. Rendered only for projects that provide one. -->
+    <p class="project-sourcing reveal" id="projectSourcing" hidden></p>
+
+    <div class="project-content reveal">
+      <h2>Overview</h2>
+      <p id="projectOverview">Overview text goes here.</p>
+
+      <h2>The Challenge</h2>
+      <p id="projectChallenge">Challenge text goes here.</p>
+
+      <h2>The Solution</h2>
+      <p id="projectSolution">Solution text goes here.</p>
+      <ul id="projectHighlights"></ul>
+
+      <h2>Results</h2>
+      <p id="projectResults">Results text goes here.</p>
+    </div>
+
+    <!-- Optional deeper-dive sections (Research & Approach, What I Left Out,
+         Outcomes, Key Learnings, What's Next) — populated by project.js only
+         for projects that provide that data, so shorter case studies aren't
+         left with empty headings. -->
+    <div class="project-content reveal" id="projectExtraSections"></div>
+
+    <div class="project-gallery" id="projectGallery" data-reveal-group></div>
+
+    <div class="project-nav reveal">
+      <a id="prevProject" href="#"><span>&larr; Previous</span><strong id="prevTitle">—</strong></a>
+      <a id="nextProject" href="#"><span>Next &rarr;</span><strong id="nextTitle">—</strong></a>
+    </div>
+  </div>
+</main>
+
+<!-- Image lightbox — opened by any element with class "lightbox-trigger"
+     (gallery thumbnails, inline diagram figures). Populated via data-lightbox-*
+     attributes read from the trigger by js/main.js. -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+  <div class="lightbox-backdrop" data-lightbox-close></div>
+  <div class="lightbox-content">
+    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close image viewer">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l12 12M16 4L4 16"/></svg>
+    </button>
+    <img class="lightbox-image" id="lightboxImage" src="" alt="">
+    <p class="lightbox-caption" id="lightboxCaption" hidden></p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container footer-row">
+    <a href="index.html#home" class="logo">Senith<span> B.</span></a>
+    <span>&copy; <span id="year"></span> Senith B. All rights reserved.</span>
+    <a href="#top" class="back-to-top">Back to Top <svg><use href="#icon-arrow-up"/></svg></a>
+  </div>
+</footer>
+
+<script src="js/project.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

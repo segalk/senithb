@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senith B. — Product &amp; UX Designer</title>
+<meta name="description" content="Portfolio of Senith B., a multidisciplinary designer working across UX/UI, product design and brand identity.">
+<script>
+(function () {
+  try {
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  } catch (e) {}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Icon sprite (no external icon font/CDN needed) -->
+<svg style="display:none">
+  <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></symbol>
+  <symbol id="icon-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+  <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></symbol>
+  <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></symbol>
+  <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+
+  <!-- Tech-stack marks: official monochrome logos (Simple Icons, CC0 —
+       fetched via the npm registry; Adobe's and OpenAI's marks needed an
+       older published package version, since both were pulled from the
+       latest release after trademark takedown requests, though the
+       already-published historical npm tarballs remain available). All
+       render in currentColor so they pick up the marquee's own muted,
+       theme-adaptive color — no brand colors. "User Research" isn't a
+       specific branded product, so it stays a simple original glyph. -->
+  <symbol id="logo-figma" viewBox="0 0 24 24" fill="currentColor"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"/></symbol>
+  <symbol id="logo-dovetail" viewBox="0 0 24 24" fill="currentColor"><path d="M6.75 0 1.5 3l5.25 3v6L12 9V3Zm0 12L1.5 15l5.25 3v6L12 21v-6Zm10.5-6L12 8.966 17.25 12v6l5.25-3V9Z"/></symbol>
+  <symbol id="logo-claude-code" viewBox="0 0 24 24" fill="currentColor"><path d="M21 10.5h3v3h-3v3h-1.5v3H18v-3h-1.5v3H15v-3H9v3H7.5v-3H6v3H4.5v-3H3v-3H0v-3h3v-6h18Zm-15 0h1.5v-3H6Zm10.5 0H18v-3h-1.5z"/></symbol>
+  <symbol id="logo-gemini" viewBox="0 0 24 24" fill="currentColor"><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></symbol>
+  <symbol id="logo-user-research" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><path d="M4 19c0-3 2.1-5.4 4.8-5.9"/><circle cx="16" cy="15" r="4"/><path d="M19.2 18.2 22 21"/></symbol>
+  <symbol id="logo-illustrator" viewBox="0 0 24 24" fill="currentColor"><path d="M10.53 10.73c-.1-.31-.19-.61-.29-.92-.1-.31-.19-.6-.27-.89-.08-.28-.15-.54-.22-.78h-.02c-.09.43-.2.86-.34 1.29-.15.48-.3.98-.46 1.48-.14.51-.29.98-.44 1.4h2.54c-.06-.211-.14-.46-.23-.721-.09-.269-.18-.559-.27-.859zM19.75.3H4.25C1.9.3 0 2.2 0 4.55v14.9c0 2.35 1.9 4.25 4.25 4.25h15.5c2.35 0 4.25-1.9 4.25-4.25V4.55C24 2.2 22.1.3 19.75.3zM14.7 16.83h-2.091c-.069.01-.139-.04-.159-.11l-.82-2.38H7.91l-.76 2.35c-.02.09-.1.15-.19.141H5.08c-.11 0-.14-.061-.11-.18L8.19 7.38c.03-.1.06-.21.1-.33.04-.21.06-.43.06-.65-.01-.05.03-.1.08-.11h2.59c.08 0 .12.03.13.08l3.65 10.3c.03.109 0 .16-.1.16zm3.4-.15c0 .11-.039.16-.129.16H16.01c-.1 0-.15-.061-.15-.16v-7.7c0-.1.041-.14.131-.14h1.98c.09 0 .129.05.129.14v7.7zm-.209-9.03c-.231.24-.571.37-.911.35-.33.01-.65-.12-.891-.35-.23-.25-.35-.58-.34-.92-.01-.34.12-.66.359-.89.242-.23.562-.35.892-.35.391 0 .689.12.91.35.22.24.34.56.33.89.01.34-.11.67-.349.92z"/></symbol>
+  <symbol id="logo-photoshop" viewBox="0 0 24 24" fill="currentColor"><path d="M9.85 8.42c-.37-.15-.77-.21-1.18-.2-.26 0-.49 0-.68.01-.2-.01-.34 0-.41.01v3.36c.14.01.27.02.39.02h.53c.39 0 .78-.06 1.15-.18.32-.09.6-.28.82-.53.21-.25.31-.59.31-1.03.01-.31-.07-.62-.23-.89-.17-.26-.41-.46-.7-.57zM19.75.3H4.25C1.9.3 0 2.2 0 4.55v14.899c0 2.35 1.9 4.25 4.25 4.25h15.5c2.35 0 4.25-1.9 4.25-4.25V4.55C24 2.2 22.1.3 19.75.3zm-7.391 11.65c-.399.56-.959.98-1.609 1.22-.68.25-1.43.34-2.25.34-.24 0-.4 0-.5-.01s-.24-.01-.43-.01v3.209c.01.07-.04.131-.11.141H5.52c-.08 0-.12-.041-.12-.131V6.42c0-.07.03-.11.1-.11.17 0 .33 0 .56-.01.24-.01.49-.01.76-.02s.56-.01.87-.02c.31-.01.61-.01.91-.01.82 0 1.5.1 2.06.31.5.17.96.45 1.34.82.32.32.57.71.73 1.14.149.42.229.85.229 1.3.001.86-.199 1.57-.6 2.13zm7.091 3.89c-.28.4-.671.709-1.12.891-.49.209-1.09.318-1.811.318-.459 0-.91-.039-1.359-.129-.35-.061-.7-.17-1.02-.32-.07-.039-.121-.109-.111-.189v-1.74c0-.029.011-.07.041-.09.029-.02.06-.01.09.01.39.23.8.391 1.24.49.379.1.779.15 1.18.15.38 0 .65-.051.83-.141.16-.07.27-.24.27-.42 0-.141-.08-.27-.24-.4-.16-.129-.489-.279-.979-.471-.51-.18-.979-.42-1.42-.719-.31-.221-.569-.51-.761-.85-.159-.32-.239-.67-.229-1.021 0-.43.12-.84.341-1.21.25-.4.619-.72 1.049-.92.469-.239 1.059-.349 1.769-.349.41 0 .83.03 1.24.09.3.04.59.12.86.23.039.01.08.05.1.09.01.04.02.08.02.12v1.63c0 .04-.02.08-.05.1-.09.02-.14.02-.18 0-.3-.16-.62-.27-.96-.34-.37-.08-.74-.13-1.12-.13-.2-.01-.41.02-.601.07-.129.03-.24.1-.31.2-.05.08-.08.18-.08.27s.04.18.101.26c.09.11.209.2.34.27.229.12.47.23.709.33.541.18 1.061.43 1.541.73.33.209.6.49.789.83.16.318.24.67.23 1.029.011.471-.129.94-.389 1.331z"/></symbol>
+  <symbol id="logo-premiere" viewBox="0 0 24 24" fill="currentColor"><path d="M10.15 8.42a2.93 2.93 0 00-1.18-.2 13.9 13.9 0 00-1.09.02v3.36l.39.02h.53c.39 0 .78-.06 1.15-.18.32-.09.6-.28.82-.53.21-.25.31-.59.31-1.03a1.45 1.45 0 00-.93-1.46zM19.75.3H4.25A4.25 4.25 0 000 4.55v14.9c0 2.35 1.9 4.25 4.25 4.25h15.5c2.35 0 4.25-1.9 4.25-4.25V4.55C24 2.2 22.1.3 19.75.3zm-7.09 11.65c-.4.56-.96.98-1.61 1.22-.68.25-1.43.34-2.25.34l-.5-.01-.43-.01v3.21a.12.12 0 01-.11.14H5.82c-.08 0-.12-.04-.12-.13V6.42c0-.07.03-.11.1-.11l.56-.01.76-.02.87-.02.91-.01c.82 0 1.5.1 2.06.31.5.17.96.45 1.34.82.32.32.57.71.73 1.14.15.42.23.85.23 1.3 0 .86-.2 1.57-.6 2.13zm6.82-3.15v1.95c0 .08-.05.11-.16.11a4.35 4.35 0 00-1.92.37c-.19.09-.37.21-.51.37v5.1c0 .1-.04.14-.13.14h-1.97a.14.14 0 01-.16-.12v-5.58l-.01-.75-.02-.78c0-.23-.02-.45-.04-.68a.1.1 0 01.07-.11h1.78c.1 0 .18.07.2.16a3.03 3.03 0 01.13.92c.3-.35.67-.64 1.08-.86a3.1 3.1 0 011.52-.39c.07-.01.13.04.14.11v.04z"/></symbol>
+  <symbol id="logo-aftereffects" viewBox="0 0 24 24" fill="currentColor"><path d="M8.54 10.73c-.1-.31-.19-.61-.29-.92s-.19-.6-.27-.89c-.08-.28-.15-.54-.22-.78h-.02c-.09.43-.2.86-.34 1.29-.15.48-.3.98-.46 1.48-.13.51-.29.98-.44 1.4h2.54c-.06-.21-.14-.46-.23-.72-.09-.27-.18-.56-.27-.86zm8.58-.29c-.55-.03-1.07.26-1.33.76-.12.23-.19.47-.22.72h2.109c.26 0 .45 0 .57-.01.08-.01.16-.03.23-.08v-.1c0-.13-.021-.25-.061-.37-.178-.56-.708-.94-1.298-.92zM19.75.3H4.25C1.9.3 0 2.2 0 4.55v14.9c0 2.35 1.9 4.25 4.25 4.25h15.5c2.35 0 4.25-1.9 4.25-4.25V4.55C24 2.2 22.1.3 19.75.3zm-7.04 16.511h-2.09c-.07.01-.14-.041-.16-.11l-.82-2.4H5.92l-.76 2.36c-.02.09-.1.15-.19.14H3.09c-.11 0-.14-.06-.11-.18L6.2 7.39c.03-.1.06-.19.1-.31.04-.21.06-.43.06-.65-.01-.05.03-.1.08-.11h2.59c.07 0 .12.03.13.08l3.65 10.25c.03.11.001.161-.1.161zm7.851-3.991c-.021.189-.031.33-.041.42-.01.07-.069.13-.14.13-.06 0-.17.01-.33.021-.159.02-.35.029-.579.029-.23 0-.471-.04-.73-.04h-3.17c.039.31.14.62.31.89.181.271.431.48.729.601.4.17.841.26 1.281.25.35-.011.699-.04 1.039-.11.311-.039.61-.119.891-.23.05-.039.08-.02.08.08v1.531c0 .039-.01.08-.021.119-.021.03-.04.051-.069.07-.32.14-.65.24-1 .3-.471.09-.94.13-1.42.12-.761 0-1.4-.12-1.92-.35-.49-.211-.921-.541-1.261-.95-.319-.39-.55-.83-.69-1.31-.14-.471-.209-.961-.209-1.461 0-.539.08-1.07.25-1.59.16-.5.41-.96.75-1.37.33-.4.739-.72 1.209-.95.471-.23 1.03-.31 1.67-.31.531-.01 1.06.09 1.55.31.41.18.77.45 1.05.8.26.34.47.72.601 1.14.129.4.189.81.189 1.22 0 .24-.01.45-.019.64z"/></symbol>
+  <symbol id="logo-chatgpt" viewBox="0 0 24 24" fill="currentColor"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></symbol>
+</svg>
+
+<!-- ===== Header ===== -->
+<header class="site-header" id="siteHeader">
+  <div class="container">
+    <a href="#home" class="logo">Senith<span> B.</span></a>
+    <div class="nav-wrap">
+      <nav>
+        <ul class="nav-list" id="navList">
+          <li><a href="#work" class="active">Work</a></li>
+          <li><a href="#case-studies">Case Studies</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#evangelizing">UX Evangelizing</a></li>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Switch to light theme" aria-pressed="false">
+        <svg class="icon-sun"><use href="#icon-sun"/></svg>
+        <svg class="icon-moon"><use href="#icon-moon"/></svg>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ===== Hero (full-viewport: hero + scroll cue + tech marquee together
+       fill one screen, so Work starts fully below the fold on load) ===== -->
+  <div class="hero-viewport">
+    <section class="hero" id="home">
+      <div class="container" data-reveal-group>
+        <h1 class="reveal hero-heading">
+          <span class="sr-only">Making complex systems feel obvious.</span>
+          <span id="heroTypewriter" aria-hidden="true"></span><span class="hero-cursor" id="heroCursor" aria-hidden="true"></span>
+        </h1>
+        <p class="lead reveal">I'm Senith B, a multidisciplinary designer working across UX/UI, product design and brand identity — currently focused on enterprise software and the occasional identity project.</p>
+        <a href="#work" class="hero-cta reveal" id="heroCta">Explore Work <svg width="16" height="16"><use href="#icon-arrow-right"/></svg></a>
+      </div>
+    </section>
+
+    <span class="scroll-cue" aria-hidden="true">
+      <svg width="16" height="16"><use href="#icon-chevron-down"/></svg>
+    </span>
+
+    <!-- ===== Tech Stack Marquee ===== -->
+    <section class="tech-marquee reveal">
+    <h2 class="sr-only">Tools I use</h2>
+    <ul class="sr-only">
+      <li>Figma</li><li>FigJam</li><li>User Research</li><li>Dovetail</li>
+      <li>Adobe Illustrator</li><li>Adobe Photoshop</li><li>Adobe Premiere Pro</li><li>Adobe After Effects</li>
+      <li>Claude Code</li><li>Gemini</li><li>ChatGPT</li>
+    </ul>
+    <div class="tech-marquee-viewport" aria-hidden="true">
+      <div class="tech-marquee-track">
+        <div class="tech-marquee-set">
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-figma"/></svg>Figma</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-figma"/></svg>FigJam</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-user-research"/></svg>User Research</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-dovetail"/></svg>Dovetail</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-illustrator"/></svg>Illustrator</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-photoshop"/></svg>Photoshop</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-premiere"/></svg>Premiere Pro</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-aftereffects"/></svg>After Effects</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-claude-code"/></svg>Claude Code</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-gemini"/></svg>Gemini</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-chatgpt"/></svg>ChatGPT</span>
+        </div>
+        <div class="tech-marquee-set">
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-figma"/></svg>Figma</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-figma"/></svg>FigJam</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-user-research"/></svg>User Research</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-dovetail"/></svg>Dovetail</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-illustrator"/></svg>Illustrator</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-photoshop"/></svg>Photoshop</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-premiere"/></svg>Premiere Pro</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-aftereffects"/></svg>After Effects</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-claude-code"/></svg>Claude Code</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-gemini"/></svg>Gemini</span>
+          <span class="tech-item"><svg class="tech-icon"><use href="#logo-chatgpt"/></svg>ChatGPT</span>
+        </div>
+      </div>
+    </div>
+    </section>
+  </div>
+
+  <!-- ===== Work ===== -->
+  <section class="work" id="work">
+    <div class="container">
+      <span class="kicker reveal">Work.</span>
+      <div class="work-filters reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="ux-product">UX &amp; Product</button>
+        <button class="filter-btn" data-filter="branding">Branding</button>
+        <button class="filter-btn" data-filter="logo-design">Logo Design</button>
+      </div>
+      <div class="work-grid" id="workGrid" data-reveal-group>
+        <a href="project.html?id=3" class="work-card reveal" data-category="logo-design">
+          <div class="thumb-block has-image" style="background-image:url('images/work/athirilli/09-work-thumbnail-3d.jpg')"></div>
+          <div class="info">
+            <span>Logo Design</span>
+            <h3>Athirilli Brand Identity</h3>
+            <p>A mosaic-tile mark and Sinhala wordmark for a Sri Lankan bed linen brand.</p>
+          </div>
+        </a>
+        <a href="project.html?id=4" class="work-card reveal" data-category="ux-product">
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>UX &amp; Product</span>
+            <h3>Conditional Formatting for IFS Cloud</h3>
+            <p>Bringing spreadsheet-style, rule-based formatting to dense enterprise data lists.</p>
+          </div>
+        </a>
+        <a href="project.html?id=1" class="work-card reveal" data-category="ux-product">
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>UX &amp; Product</span>
+            <h3>Navigation Redesign for IFS Cloud</h3>
+            <p>Consolidating fragmented navigation into one consistent interaction model.</p>
+          </div>
+        </a>
+        <a href="project.html?id=6" class="work-card reveal" data-category="ux-product">
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>UX &amp; Product</span>
+            <h3>Nike Web App Re-Touch</h3>
+            <p>A self-initiated concept re-skin — consumer visual craft and one transition, prototyped until it felt right.</p>
+          </div>
+        </a>
+        <a href="project.html?id=2" class="work-card reveal" data-category="ux-product">
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>UX &amp; Product</span>
+            <h3>Spatial UI for Hands-Free Field Service</h3>
+            <p>Enterprise ERP data rebuilt for a head-mounted display, where contrast is added rather than blocked.</p>
+          </div>
+        </a>
+        <a href="project.html?id=5" class="work-card reveal" data-category="ux-product">
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>UX &amp; Product</span>
+            <h3>White-Labelling IFS Remote Assistance</h3>
+            <p>Making a licensed AR collaboration product belong inside an enterprise field service suite.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Case Studies ===== -->
+  <section class="case-studies" id="case-studies">
+    <div class="container">
+      <span class="kicker reveal">Case Studies.</span>
+      <div class="case-grid" data-reveal-group>
+        <a href="project.html?id=4&from=case-studies" class="case-card reveal">
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>Case Study 1</span>
+            <h3>Conditional Formatting for IFS Cloud</h3>
+            <p>Bringing spreadsheet-style, rule-based formatting to dense enterprise data lists.</p>
+          </div>
+        </a>
+        <a href="project.html?id=1&from=case-studies" class="case-card reveal">
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>Case Study 2</span>
+            <h3>Navigation Redesign for IFS Cloud</h3>
+            <p>Consolidating fragmented navigation into one consistent interaction model.</p>
+          </div>
+        </a>
+        <a href="project.html?id=2&from=case-studies" class="case-card reveal">
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>Case Study 3</span>
+            <h3>Spatial UI for Hands-Free Field Service</h3>
+            <p>Enterprise ERP data rebuilt for a head-mounted display, where contrast is added rather than blocked.</p>
+          </div>
+        </a>
+        <a href="project.html?id=5&from=case-studies" class="case-card reveal">
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>Case Study 4</span>
+            <h3>White-Labelling IFS Remote Assistance</h3>
+            <p>Making a licensed AR collaboration product belong inside an enterprise field service suite.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Services ===== -->
+  <section class="services" id="services">
+    <div class="container">
+      <span class="kicker reveal">Services.</span>
+      <div class="service-list" data-reveal-group>
+        <div class="service-item reveal">
+          <span class="service-bullet"></span>
+          <div>
+            <h3>UX/UI &amp; Product Design</h3>
+            <p>End-to-end product design: research, flows, interaction and interface design for web and enterprise software.</p>
+          </div>
+        </div>
+        <div class="service-item reveal">
+          <span class="service-bullet"></span>
+          <div>
+            <h3>Graphic Design &amp; Branding</h3>
+            <p>Visual identity systems: from brand strategy to the typography, color and layout that carry it.</p>
+          </div>
+        </div>
+        <div class="service-item reveal">
+          <span class="service-bullet"></span>
+          <div>
+            <h3>Logo Design</h3>
+            <p>Wordmarks and monograms built to hold up at favicon size and on a billboard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== UX Evangelizing ===== -->
+  <section class="evangelizing" id="evangelizing">
+    <div class="container" data-reveal-group>
+      <span class="kicker reveal">UX Evangelizing.</span>
+      <div class="evangelizing-track reveal" id="evangelizingTrack">
+        <button class="evangelizing-arrow prev" id="evangelizingPrev" aria-label="Previous slide">
+          <svg><use href="#icon-arrow-left"/></svg>
+        </button>
+        <button class="evangelizing-arrow next" id="evangelizingNext" aria-label="Next slide">
+          <svg><use href="#icon-arrow-right"/></svg>
+        </button>
+        <div class="evangelizing-slide active" style="background-image:url('images/evangelizing/hackathon-judge-1.jpg')">
+          <div class="slide-text">
+            <h3>Hackathon Judge</h3>
+            <p>Judged UX and product design submissions at Benchmark 3.0, a hackathon organized by AIESEC in SLIIT.</p>
+          </div>
+        </div>
+        <div class="evangelizing-slide" style="background-image:url('images/evangelizing/hackathon-judge-2.jpg')">
+          <div class="slide-text">
+            <h3>Hackathon Judge</h3>
+            <p>Judged UX and product design submissions at Benchmark 3.0, a hackathon organized by AIESEC in SLIIT.</p>
+          </div>
+        </div>
+        <div class="evangelizing-slide" style="background-image:url('images/evangelizing/hackathon-judge-3.jpg')">
+          <div class="slide-text">
+            <h3>Hackathon Judge</h3>
+            <p>Judged UX and product design submissions at Benchmark 3.0, a hackathon organized by AIESEC in SLIIT.</p>
+          </div>
+        </div>
+        <div class="evangelizing-slide" style="background-image:url('images/evangelizing/hackathon-judge-4.jpg')">
+          <div class="slide-text">
+            <h3>Hackathon Judge</h3>
+            <p>Judged UX and product design submissions at Benchmark 3.0, a hackathon organized by AIESEC in SLIIT.</p>
+          </div>
+        </div>
+        <div class="evangelizing-slide" style="background-image:url('images/evangelizing/university-speaker-1.jpg')">
+          <div class="slide-text">
+            <h3>University Speaker</h3>
+            <p>Spoke to computing students on "How to Succeed in a Career in UX" at a Cre8X session.</p>
+          </div>
+        </div>
+        <div class="evangelizing-slide" style="background-image:url('images/evangelizing/university-speaker-2.jpg')">
+          <div class="slide-text">
+            <h3>University Speaker</h3>
+            <p>Spoke to computing students on "How to Succeed in a Career in UX" at a Cre8X session.</p>
+          </div>
+        </div>
+        <div class="evangelizing-slide" style="background-image:url('images/evangelizing/university-speaker-3.jpg')">
+          <div class="slide-text">
+            <h3>University Speaker</h3>
+            <p>Spoke to computing students on "How to Succeed in a Career in UX" at a Cre8X session.</p>
+          </div>
+        </div>
+        <div class="evangelizing-slide" style="background-image:url('images/evangelizing/university-speaker-4.jpg')">
+          <div class="slide-text">
+            <h3>University Speaker</h3>
+            <p>Spoke to computing students on "How to Succeed in a Career in UX" at a Cre8X session.</p>
+          </div>
+        </div>
+        <div class="evangelizing-slide" style="background-image:url('images/evangelizing/university-speaker-5.jpg')">
+          <div class="slide-text">
+            <h3>University Speaker</h3>
+            <p>Spoke to computing students on "How to Succeed in a Career in UX" at a Cre8X session.</p>
+          </div>
+        </div>
+      </div>
+      <div class="evangelizing-dots" id="evangelizingDots"></div>
+    </div>
+  </section>
+
+  <!-- ===== About Me ===== -->
+  <section class="about" id="about">
+    <div class="container" data-reveal-group>
+      <div class="about-body reveal">
+        <span class="kicker">About me.</span>
+        <h2>Hi! I'm Senith<span class="accent"> B.</span></h2>
+        <p>I'm a multidisciplinary designer who moves between UX/UI, Product design and brand identity — most recently spending my time inside complex enterprise software, making dense systems feel simple. Outside of client work, I judge design competitions and mentor early-career designers.</p>
+        <p>I care about the details other people skip: the fifth state of a component, the label that actually makes sense, the grid that holds a whole system together.</p>
+      </div>
+      <div class="about-photo reveal">
+        <svg><use href="#icon-user"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="contact" id="contact">
+    <div class="container" data-reveal-group>
+      <span class="kicker reveal">Contact.</span>
+      <h2 class="reveal">Let's build something <span class="accent">clear</span>.</h2>
+      <p class="contact-sub reveal">Open to select freelance and full-time opportunities.</p>
+      <a href="mailto:senithb.41@gmail.com" class="contact-email reveal">senithb<span class="accent">.41</span>@gmail.com</a>
+      <div class="contact-links reveal">
+        <a href="#">LinkedIn.</a>
+        <a href="#">Behance.</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer">
+  <div class="container footer-row">
+    <a href="#home" class="logo">Senith<span> B.</span></a>
+    <span>&copy; <span id="year"></span> Senith B. All rights reserved.</span>
+    <a href="#home" class="back-to-top">Back to Top <svg><use href="#icon-arrow-up"/></svg></a>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

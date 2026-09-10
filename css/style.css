@@ -1,0 +1,686 @@
+/* ---------- Variables ---------- */
+/* Dark is the default theme. [data-theme="light"] below overrides it.
+   --accent (#E64A2E) is kept identical in both themes: against the dark
+   theme's #121212 background it measures ~4.8:1 contrast (passes WCAG AA
+   for normal text); against the light theme's white background it's used
+   only on large/bold display text or as a non-text indicator, where the
+   lower AA large-text/UI threshold (3:1) applies. */
+:root {
+  color-scheme: dark;
+  --bg: #121212;
+  --surface-alt: #1a1a1d;
+  --text: #f5f5f5;
+  --text-body: #d6d6d6;
+  --text-light: #a0a6ad;
+  --text-faint: #8b9199;
+  --accent: #E64A2E;
+  --dark: #242428;
+  --border: #2a2a2e;
+  --header-bg: rgba(18, 18, 18, 0.85);
+  --shadow-resting: 0 1px 3px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 30px 55px rgba(0, 0, 0, 0.55), 0 12px 24px rgba(0, 0, 0, 0.4);
+  --font: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --container: 1280px;
+  --container-pad: 64px;
+  --transition: 0.25s ease;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f2f2f2;
+  --surface-alt: #fafafa;
+  --text: #141414;
+  --text-body: #2B2B2B;
+  --text-light: #7E858B;
+  --text-faint: #9b9b9b;
+  --dark: #2B2B2B;
+  --border: #e6e6e6;
+  --header-bg: rgba(242, 242, 242, 0.9);
+  --shadow-resting: 0 1px 3px rgba(20, 20, 30, 0.10), 0 1px 2px rgba(20, 20, 30, 0.06);
+  --shadow-hover: 0 30px 55px rgba(20, 20, 30, 0.18), 0 12px 24px rgba(20, 20, 30, 0.12);
+}
+
+/* ---------- Reset ---------- */
+* , *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+h1, h2, h3, h4 { font-family: var(--font); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
+.accent { color: var(--accent); }
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+section { padding: 128px 0; }
+.kicker { display: block; font-weight: 700; font-size: 1rem; margin-bottom: 20px; }
+.section-head { max-width: 640px; margin-bottom: 48px; }
+.section-head h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); }
+.section-head p { color: var(--text-light); font-size: 1.05rem; margin-top: 14px; }
+
+/* ---------- Focus (keyboard accessibility) ---------- */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Scroll reveal (staggered cascade) ---------- */
+/* Elements are visible by default; only once JS confirms IntersectionObserver
+   support (and the visitor hasn't asked for reduced motion) does body get
+   .reveal-armed, which is what actually hides them pre-reveal. That way a
+   slow/broken/absent script, or reduced-motion preference, never leaves
+   content stuck invisible. */
+.reveal {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: calc(var(--reveal-i, 0) * 90ms);
+}
+body.reveal-armed .reveal:not(.in-view) {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: none; }
+  body { transition: none; }
+}
+@media print {
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--header-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition), background-color var(--transition);
+}
+.site-header.scrolled { border-color: var(--border); }
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 88px;
+}
+.logo { font-size: 24px; font-weight: 700; letter-spacing: -0.25px; line-height: 1; }
+.logo span { color: var(--accent); }
+nav { position: relative; }
+.nav-list { display: flex; gap: 32px; }
+.nav-list a {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-body);
+  position: relative;
+  padding: 6px 0;
+  transition: color var(--transition);
+}
+.nav-list a:hover { color: var(--accent); }
+.nav-list a.active::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+/* Shared sliding indicator: replaces the per-link underline above on wide
+   screens (JS positions it over whichever link is active), so the active
+   state eases smoothly between nav items instead of jump-cutting. */
+.nav-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: left 0.35s ease, width 0.35s ease, opacity 0.2s ease;
+}
+@media (min-width: 861px) {
+  .nav-list a.active::after { content: none; }
+}
+@media (max-width: 860px) {
+  .nav-indicator { display: none; }
+}
+.nav-wrap { display: flex; align-items: center; gap: 24px; }
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  flex-shrink: 0;
+  transition: border-color var(--transition), color var(--transition);
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle .icon-moon { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 26px;
+}
+.nav-toggle span { height: 2px; width: 100%; background: var(--text); border-radius: 2px; transition: transform var(--transition), opacity var(--transition), background var(--transition); }
+.nav-toggle:hover span { background: var(--accent); }
+
+/* ---------- Hero ---------- */
+/* Full-viewport hero: the hero content, scroll cue, and tech marquee
+   together fill exactly one screen on load, so Work starts fully below
+   the fold. 100dvh (with 100vh as a fallback for older browsers) avoids
+   the classic mobile-browser issue where 100vh is taller than what's
+   actually visible once the address bar is accounted for. */
+.hero-viewport {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 88px; /* clears the fixed header */
+}
+.hero { flex: 1; display: flex; align-items: center; }
+.hero h1 {
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  margin-bottom: 24px;
+  max-width: 544px;
+  /* Reserves room for the tallest of the rotating headlines so the lead
+     paragraph below doesn't jump as shorter/longer sentences cycle in. */
+  min-height: 3.45em;
+}
+.hero p.lead { font-size: 1.1rem; color: var(--text-body); max-width: 544px; }
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.98rem;
+  padding: 16px 30px;
+  border-radius: 999px;
+  margin-top: 40px;
+  box-shadow: 0 8px 24px rgba(230, 74, 46, 0.25);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(230, 74, 46, 0.35); }
+.hero-cta svg { transition: transform var(--transition); }
+.hero-cta:hover svg { transform: translateX(3px); }
+
+/* Sits in normal document flow between the hero and the tech marquee
+   (not absolutely positioned), so it always has its own breathing room
+   and can never overlap the marquee below it. Purely decorative — a
+   visual "more below" cue, not a second CTA — so it takes no pointer
+   events and isn't focusable/clickable; the "Explore Work" button is
+   the one actual way to trigger the scroll. */
+.scroll-cue {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto 28px;
+  color: var(--text-faint);
+  pointer-events: none;
+}
+.scroll-cue svg { animation: scroll-cue-bounce 1.8s ease-in-out infinite; }
+@keyframes scroll-cue-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue svg { animation: none; }
+}
+
+/* Blinking cursor for the hero's typewriter effect. Solid (no blink)
+   while actively typing/deleting via .typing; blinks during pauses. */
+.hero-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  margin-left: 4px;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  animation: hero-cursor-blink 1s step-end infinite;
+}
+.hero-cursor.typing { animation: none; opacity: 1; }
+@keyframes hero-cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cursor { animation: none; opacity: 1; }
+}
+
+/* ---------- Tech Stack Marquee ---------- */
+/* Deliberately quiet: muted color, small type, no accent — a background
+   detail sitting between the hero and Work, not competing with either. */
+.tech-marquee {
+  padding: 36px 0;
+}
+.tech-marquee-viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.tech-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: tech-marquee-scroll 36s linear infinite;
+  will-change: transform;
+}
+.tech-marquee-viewport:hover .tech-marquee-track { animation-play-state: paused; }
+.tech-marquee-set {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding-right: 40px;
+  flex-shrink: 0;
+}
+.tech-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-faint);
+  white-space: nowrap;
+  opacity: 0.75;
+}
+.tech-icon { width: 18px; height: 18px; flex-shrink: 0; }
+@keyframes tech-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tech-marquee-track { animation: none; }
+}
+
+/* ---------- Work ---------- */
+.work-filters { display: flex; gap: 12px; margin-bottom: 44px; flex-wrap: wrap; }
+.filter-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--accent);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--accent);
+  transition: all var(--transition);
+}
+.filter-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+.filter-btn:hover:not(.active) { background: var(--text); color: var(--bg); border-color: var(--text); }
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.work-card { display: block; }
+.thumb-block {
+  aspect-ratio: 4 / 3;
+  background: var(--dark);
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+.thumb-block.has-image, .project-cover.has-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* Cards get a resting shadow that deepens and spreads on hover, as if the
+   card were physically lifting toward the light rather than just scaling. */
+.work-card .thumb-block, .case-card .thumb-block {
+  border-radius: 8px;
+  box-shadow: var(--shadow-resting);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.work-card:hover .thumb-block, .case-card:hover .thumb-block {
+  transform: scale(1.04) translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+.work-card .info { padding-top: 18px; }
+.work-card .info span { color: var(--text-faint); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.work-card .info h3 { font-size: 1.1rem; margin-top: 8px; font-weight: 700; }
+.work-card .info p { color: var(--text-light); font-size: 0.92rem; margin-top: 8px; }
+.work-card.hidden { display: none; }
+
+/* ---------- Case Studies ---------- */
+.case-studies { background: var(--surface-alt); }
+.case-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.case-card { display: block; }
+.case-card .thumb-block { aspect-ratio: 4 / 3; }
+.case-card .info { padding-top: 16px; }
+.case-card .info span { color: var(--text-faint); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.case-card .info h3 { font-size: 1rem; margin-top: 6px; font-weight: 700; }
+.case-card .info p { color: var(--text-light); font-size: 0.88rem; margin-top: 6px; }
+
+/* ---------- Services ---------- */
+/* Horizontal columns (icon above text) on larger screens; the mobile media
+   query below reverts to the original stacked rows (icon left of text). */
+.service-list { display: flex; flex-direction: row; gap: 40px; }
+.service-item { display: flex; flex-direction: column; gap: 20px; flex: 1; }
+.service-bullet { width: 40px; height: 40px; background: var(--text); flex-shrink: 0; }
+.service-item h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+.service-item p { color: var(--text-light); font-size: 0.95rem; }
+
+/* ---------- UX Evangelizing ---------- */
+.evangelizing-track { position: relative; aspect-ratio: 16 / 8; overflow: hidden; }
+.evangelizing-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transition: background var(--transition);
+}
+.evangelizing-arrow:hover { background: rgba(255, 255, 255, 0.3); }
+.evangelizing-arrow:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.evangelizing-arrow.prev { left: 16px; }
+.evangelizing-arrow.next { right: 16px; }
+.evangelizing-arrow svg { width: 20px; height: 20px; }
+.evangelizing-slide {
+  position: absolute; inset: 0;
+  background-color: var(--dark);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 40px 44px;
+}
+/* Readability scrim over the photo, kept as a plain stylesheet gradient
+   (no url()) so it can't be affected by the base-URL quirk below. */
+.evangelizing-slide::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.2) 45%, rgba(0, 0, 0, 0.8) 100%);
+}
+.evangelizing-slide .slide-text { position: relative; }
+.evangelizing-slide.active { opacity: 1; }
+.evangelizing-slide .slide-text { max-width: 560px; }
+.evangelizing-slide h3 { color: #fff; font-size: 1.3rem; margin-bottom: 10px; }
+.evangelizing-slide p { color: #cfcfcf; font-size: 0.92rem; }
+.evangelizing-dots { display: flex; justify-content: center; gap: 10px; margin-top: 28px; }
+.evangelizing-dots button { width: 9px; height: 9px; border-radius: 50%; background: var(--text-faint); transition: background var(--transition), transform var(--transition); }
+.evangelizing-dots button:hover:not(.active) { background: var(--text-light); }
+.evangelizing-dots button:focus-visible { outline-offset: 3px; }
+.evangelizing-dots button.active { background: var(--accent); transform: scale(1.25); }
+
+/* ---------- About ---------- */
+.about .container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
+.about-body h2 { font-size: clamp(1.8rem, 3vw, 2.3rem); margin-bottom: 24px; max-width: 544px; }
+.about-body p { color: var(--text-body); margin-bottom: 16px; max-width: 544px; }
+.about-photo { aspect-ratio: 379 / 365; max-width: 379px; margin-left: auto; background: var(--dark); display: flex; align-items: center; justify-content: center; }
+.about-photo svg { width: 30%; height: 30%; color: #4a4a4a; }
+
+/* ---------- Contact ---------- */
+.contact { text-align: center; }
+.contact .container { max-width: 700px; }
+.contact h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 18px; max-width: 544px; margin-inline: auto; }
+.contact-sub { color: var(--text-body); font-size: 1.05rem; margin-bottom: 56px; max-width: 544px; margin-inline: auto; }
+.contact-email {
+  display: inline-block;
+  font-size: clamp(1.4rem, 4vw, 2.1875rem);
+  font-weight: 600;
+  letter-spacing: -0.25px;
+  margin-bottom: 28px;
+  transition: color var(--transition);
+}
+.contact-email:hover { color: var(--accent); }
+.contact-links { display: flex; justify-content: center; gap: 10px; font-weight: 700; }
+.contact-links a { color: var(--accent); transition: opacity var(--transition); }
+.contact-links a:hover { opacity: 0.7; }
+
+/* ---------- Footer ---------- */
+.site-footer { padding: 16px 0 64px; }
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+.footer-row .logo { font-size: 24px; }
+.back-to-top { display: flex; align-items: center; gap: 8px; font-weight: 400; color: var(--text-light); }
+.back-to-top svg { width: 15px; height: 15px; }
+
+/* ---------- Project detail page ---------- */
+.project-hero { padding: 168px 0 56px; }
+.project-back { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 600; margin-bottom: 24px; font-size: 0.9rem; }
+.project-hero h1 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 18px; max-width: 700px; }
+.project-hero p { color: var(--text-light); font-size: 1.05rem; max-width: 640px; }
+.project-cover { aspect-ratio: 16/9; background: var(--dark); border-radius: var(--radius-md); margin-bottom: 64px; }
+.project-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, max-content));
+  justify-content: space-between;
+  gap: 32px 40px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  margin-bottom: 64px;
+}
+.project-meta > div { min-width: 0; }
+.project-meta div span { display: block; color: var(--text-light); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.project-meta div strong { font-size: 1rem; }
+.project-meta div strong a:hover { color: var(--accent); text-decoration: underline; }
+.project-sourcing {
+  max-width: 760px;
+  margin: -32px 0 56px;
+  padding-left: 20px;
+  border-left: 3px solid var(--border);
+  color: var(--text-light);
+  font-size: 0.92rem;
+}
+.project-source-links { list-style: none; margin: 0 0 16px; }
+.project-source-links li { margin-bottom: 8px; }
+.project-source-links a { color: var(--accent); }
+.project-source-links a:hover { text-decoration: underline; }
+.project-content { margin-bottom: 64px; }
+.project-content h2 { font-size: 1.4rem; margin: 40px 0 16px; }
+.project-content h2:first-child { margin-top: 0; }
+.project-content p { color: var(--text-light); margin-bottom: 16px; }
+.project-content ul { margin: 0 0 16px 20px; list-style: disc; color: var(--text-light); }
+.project-content ul li { margin-bottom: 8px; }
+.project-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 64px; }
+.project-gallery .thumb-block { aspect-ratio: 4/3; }
+.gallery-caption { color: var(--text-light); font-size: 0.85rem; margin-top: 10px; }
+
+/* Inline figures dropped mid-narrative (research diagrams, journey maps,
+   etc). The image scales to the full width of the content column and keeps
+   its own intrinsic aspect ratio at any viewport size — width is the only
+   dimension set, height is left to `auto` rather than fixed or cropped. */
+.project-inline-figure { margin: 32px 0; }
+.project-inline-image-btn {
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  text-align: inherit;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-resting);
+  cursor: pointer;
+  transition: box-shadow var(--transition);
+}
+.project-inline-image { display: block; width: 100%; height: auto; }
+.project-inline-caption { color: var(--text-light); font-size: 0.85rem; margin-top: 10px; }
+
+/* ---------- Clickable gallery / inline images ---------- */
+.lightbox-trigger:hover { box-shadow: var(--shadow-hover); }
+button.thumb-block.lightbox-trigger {
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+}
+.lightbox[hidden] { display: none; }
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.lightbox.is-open .lightbox-backdrop { opacity: 1; }
+.lightbox-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: min(1200px, 100%);
+  max-height: 100%;
+  opacity: 0;
+  transform: scale(0.96);
+  /* Transitioned only once .is-ready is added (the image has actually
+     finished loading) — see js/main.js. Fading it in as soon as the
+     backdrop opens, before the image has a real size to lay out at, is
+     what produced the visible jerk/snap this replaces. */
+  transition: opacity var(--transition), transform var(--transition);
+}
+.lightbox-content.is-ready { opacity: 1; transform: scale(1); }
+.lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-hover);
+}
+.lightbox-caption {
+  color: var(--text);
+  font-size: 0.9rem;
+  text-align: center;
+  max-width: 640px;
+  margin-top: 16px;
+}
+.lightbox-close {
+  position: absolute;
+  top: -48px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.lightbox-close:hover { background: var(--dark); transform: scale(1.06); }
+body.lightbox-open { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-backdrop, .lightbox-content { transition: none; }
+}
+@media (max-width: 640px) {
+  .lightbox { padding: 56px 16px 24px; }
+  .lightbox-close { top: -44px; right: 0; }
+}
+.project-nav {
+  border-top: 1px solid var(--border);
+  padding-top: 40px;
+  padding-bottom: 64px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.project-nav a { display: flex; flex-direction: column; gap: 6px; max-width: 260px; }
+.project-nav a:last-child { text-align: right; align-items: flex-end; }
+.project-nav span { color: var(--text-light); font-size: 0.8rem; }
+.project-nav strong { font-weight: 700; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .case-grid { grid-template-columns: repeat(2, 1fr); }
+  .project-meta { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 860px) {
+  :root { --container-pad: 24px; }
+  .nav-list { display: none; }
+  .nav-toggle { display: flex; }
+  .work-grid { grid-template-columns: repeat(2, 1fr); }
+  .about .container { grid-template-columns: 1fr; }
+  .about-photo { order: -1; max-width: 360px; margin-inline: auto; width: 100%; }
+  .service-list { flex-direction: column; gap: 40px; max-width: 720px; }
+  .service-item { flex-direction: row; gap: 24px; align-items: flex-start; }
+  .service-item p { max-width: 560px; }
+  .evangelizing-track { aspect-ratio: 4/3; }
+  section { padding: 80px 0; }
+  .hero { padding: 0; }
+}
+@media (max-width: 640px) {
+  .work-grid, .case-grid { grid-template-columns: 1fr; }
+  .project-gallery { grid-template-columns: 1fr; }
+  .project-meta { grid-template-columns: 1fr 1fr; }
+  .project-nav { flex-direction: column; }
+  .project-nav a:last-child { text-align: left; align-items: flex-start; }
+  .footer-row { flex-direction: column; text-align: center; }
+}
+
+/* ---------- Mobile nav open state ---------- */
+body.nav-open .nav-list {
+  display: flex;
+  position: fixed;
+  top: 88px; left: 0; right: 0;
+  background: var(--bg);
+  flex-direction: column;
+  padding: 24px;
+  gap: 20px;
+  border-bottom: 1px solid var(--border);
+}
+body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+body.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
