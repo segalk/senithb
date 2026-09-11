@@ -295,6 +295,7 @@
     {
       id: 6,
       title: 'Nike Web App Re-Touch',
+      cover: 'images/work/nike/cover.png',
       gallery: [],
       category: 'UX & Product',
       summary: 'A concept re-skin of a familiar retail interface, built to practise two things I don\'t get to practise in enterprise work: consumer-grade visual craft, and prototyping a transition until it feels right.',
@@ -306,6 +307,18 @@
       overview: 'A self-initiated concept re-skin of a familiar retail interface, designed and prototyped in Figma in 2022. I spend my working life in enterprise software, where the constraints are dense data, long sessions and a design system I don\'t own. This was the opposite exercise, chosen deliberately: a consumer surface with almost no data on screen, where the whole job is composition, typography and motion. This is a craft exercise, and I\'d rather present it as one than dress it up as something it wasn\'t.',
       challenge: 'I picked a familiar retail app so the brief would be about execution rather than invention. There was no problem to solve and no user to research — the products, the categories and the flow already exist and work. What I wanted to know was whether I could take a surface people already know and make it feel calmer, and whether I could build a transition that actually felt good rather than one that merely functioned. Those were the two questions, and they are the only things this project set out to answer.',
       solution: 'Two themes, built as one system: light and dark were designed together rather than one derived from the other, the light theme running on white with a stepped neutral scale and the dark theme on black and near-black. The dark theme is the one I\'d show first, because product photography on a black ground behaves completely differently from the same photography on white — the shoe stops being an object placed on a page and becomes the only lit thing in the frame. That isn\'t a colour swap, and it\'s the argument for designing both themes at once rather than inverting one at the end. A grid that gets out of the way: a full-width promotional card, a horizontal category row, then a two-column product grid, with each product card carrying only what a decision needs at that moment — name, price, image, and a single forward affordance. Everything else waits for the detail page. Type doing the hierarchy: one family, two weights, with bold carrying product names and the promotional line and regular carrying everything else. With a palette this restrained, weight and size have to do the structural work that colour usually does, which is a useful constraint to design under because it exposes any hierarchy you were faking with a tint. And documented as a system: colour values, type styles, the icon set and an app icon are all specified on the board rather than left implicit in the screens. That habit comes from enterprise work, and it\'s the part of this project I\'d defend most readily.',
+      solutionImage: [
+        {
+          src: 'images/work/nike/screens.png',
+          alt: 'The home and product screens shown in light and dark side by side, above the two-column product grid and the wireframe it sits on',
+          caption: 'Light and dark side by side rather than one derived from the other — the same photography is an object on a page in one and the only lit thing in the frame in the other.'
+        },
+        {
+          src: 'images/work/nike/design-system.png',
+          alt: 'A project assets board specifying the app icon, a six-icon set, two Helvetica Neue weights, and the light and dark colour ramps with their hex values',
+          caption: 'The system, written down rather than left implicit in the screens — and where the light ramp’s mid-greys, #BFBFBF and #999999, are visible as decisions rather than accidents.'
+        }
+      ],
       highlights: [
         'Light and dark designed together as one system rather than one inverted from the other — product photography behaves differently enough on black that it is not a colour swap',
         'Product cards carry only what a decision needs at that moment: name, price, image, one forward affordance',
