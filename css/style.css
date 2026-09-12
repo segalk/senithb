@@ -129,7 +129,11 @@ body.reveal-armed .reveal:not(.in-view) {
 .logo { font-size: 24px; font-weight: 700; letter-spacing: -0.25px; line-height: 1; }
 .logo span { color: var(--accent); }
 nav { position: relative; }
-.nav-list { display: flex; gap: 32px; }
+/* align-items: center (not the default stretch) is what lets a bordered
+   control sit on the same optical line as the plain text links: the
+   links centre on their line box, the button is an inline-flex box, and
+   without this they resolve to different vertical centres. */
+.nav-list { display: flex; align-items: center; gap: 32px; }
 .nav-list a {
   font-weight: 700;
   font-size: 0.95rem;
@@ -150,33 +154,46 @@ nav { position: relative; }
    padding scales with whatever font-size the pill is given and the
    proportions hold. white-space: nowrap keeps an address from breaking
    mid-string. */
-/* Selectors are doubled with `.nav-list a.nav-cta` because `.nav-list a`
+/* Contact nav item — ghost button. Transparent until interaction, with a
+   hairline in currentColor so the border always tracks the text colour;
+   change `color` and the border follows.
+
+   Vertical padding is deliberately small so the control's height lands
+   close to the 29px text links; `align-items: center` on .nav-list then
+   resolves the remainder. Padding is in em, so the shape holds when the
+   label becomes a full email address.
+
+   Selectors are doubled with `.nav-list a.nav-cta` because `.nav-list a`
    (0,1,1) out-specifies a bare `.nav-cta` (0,1,0) and would otherwise win
-   on colour and padding. The bare class is kept so the pill still works if
-   it is ever used outside the nav list. */
+   on colour and padding. */
 .nav-cta,
 .nav-list a.nav-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5em;
-  background: var(--accent);
-  color: #fff;
-  font-weight: 700;
+  background: transparent;
+  border: 1.5px solid currentColor;
+  color: var(--accent);
+  font-weight: 600;
   font-size: 0.88rem;
   line-height: 1;
-  padding: 0.78em 1.5em;
+  padding: 0.5em 1.15em;
   border-radius: 999px;
   white-space: nowrap;
   max-width: 100%;
-  box-shadow: 0 6px 18px rgba(230, 74, 46, 0.22);
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition: background-color var(--transition), color var(--transition),
+              border-color var(--transition);
 }
+/* Fills only on hover/focus, inverting to solid the same way the Work
+   section's filter pills do. */
 .nav-cta:hover,
-.nav-list a.nav-cta:hover {
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(230, 74, 46, 0.32);
+.nav-list a.nav-cta:hover,
+.nav-cta:focus-visible,
+.nav-list a.nav-cta:focus-visible {
+  background-color: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
 }
 .nav-cta:focus-visible,
 .nav-list a.nav-cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
