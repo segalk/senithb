@@ -139,6 +139,49 @@ nav { position: relative; }
   transition: color var(--transition);
 }
 .nav-list a:hover { color: var(--accent); }
+
+/* Header call-to-action. Deliberately shares the hero "Explore Work"
+   button's visual language (accent pill, white bold label, lift on hover)
+   so the two primary actions on the page read as the same control, just
+   scaled for the header.
+
+   Sized in em rather than px: the label is expected to become a full
+   email address, which is a far longer string than "Contact", so the
+   padding scales with whatever font-size the pill is given and the
+   proportions hold. white-space: nowrap keeps an address from breaking
+   mid-string. */
+/* Selectors are doubled with `.nav-list a.nav-cta` because `.nav-list a`
+   (0,1,1) out-specifies a bare `.nav-cta` (0,1,0) and would otherwise win
+   on colour and padding. The bare class is kept so the pill still works if
+   it is ever used outside the nav list. */
+.nav-cta,
+.nav-list a.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.88rem;
+  line-height: 1;
+  padding: 0.78em 1.5em;
+  border-radius: 999px;
+  white-space: nowrap;
+  max-width: 100%;
+  box-shadow: 0 6px 18px rgba(230, 74, 46, 0.22);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.nav-cta:hover,
+.nav-list a.nav-cta:hover {
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(230, 74, 46, 0.32);
+}
+.nav-cta:focus-visible,
+.nav-list a.nav-cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.nav-cta::after,
+.nav-list a.nav-cta::after { content: none; }
 .nav-list a.active::after {
   content: "";
   position: absolute;
@@ -444,22 +487,11 @@ nav { position: relative; }
 .about-photo svg { width: 30%; height: 30%; color: #4a4a4a; }
 
 /* ---------- Contact ---------- */
-.contact { text-align: center; }
-.contact .container { max-width: 700px; }
-.contact h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 18px; max-width: 544px; margin-inline: auto; }
-.contact-sub { color: var(--text-body); font-size: 1.05rem; margin-bottom: 56px; max-width: 544px; margin-inline: auto; }
-.contact-email {
-  display: inline-block;
-  font-size: clamp(1.4rem, 4vw, 2.1875rem);
-  font-weight: 600;
-  letter-spacing: -0.25px;
-  margin-bottom: 28px;
-  transition: color var(--transition);
-}
-.contact-email:hover { color: var(--accent); }
-.contact-links { display: flex; justify-content: center; gap: 10px; font-weight: 700; }
-.contact-links a { color: var(--accent); transition: opacity var(--transition); }
-.contact-links a:hover { opacity: 0.7; }
+/* Social links, sitting under the About copy now that the dedicated
+   Contact section is gone. Wraps rather than overflowing on narrow screens. */
+.about-links { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 32px; font-weight: 700; }
+.about-links a { color: var(--accent); transition: opacity var(--transition); }
+.about-links a:hover { opacity: 0.7; }
 
 /* ---------- Footer ---------- */
 .site-footer { padding: 16px 0 64px; }
@@ -681,6 +713,7 @@ body.nav-open .nav-list {
   gap: 20px;
   border-bottom: 1px solid var(--border);
 }
+body.nav-open .nav-cta { justify-content: center; width: 100%; }
 body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 body.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
 body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
