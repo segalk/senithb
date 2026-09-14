@@ -493,7 +493,15 @@ nav { position: relative; }
 .service-item p { color: var(--text-light); font-size: 0.95rem; }
 
 /* ---------- UX Evangelizing ---------- */
-.evangelizing-track { position: relative; aspect-ratio: 16 / 8; overflow: hidden; }
+.evangelizing-track {
+  position: relative;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  /* Same corner as .project-cover and the gallery figures, so the carousel
+     reads as part of the same set of framed media. overflow:hidden above is
+     what carries the radius down onto the slides. */
+  border-radius: var(--radius-md);
+}
 .evangelizing-arrow {
   position: absolute;
   top: 50%;
@@ -517,25 +525,31 @@ nav { position: relative; }
 .evangelizing-slide {
   position: absolute; inset: 0;
   background-color: var(--dark);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 0.5s ease;
   display: flex;
   align-items: flex-end;
   padding: 40px 44px;
 }
+/* The photo sits on its own element rather than on the slide itself. That is
+   what lets the narrow layout below lift the caption out from over the
+   picture without having to fight the inline background-image. */
+.evangelizing-slide .slide-media {
+  position: absolute; inset: 0; z-index: 0;
+  background-color: var(--dark);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 /* Readability scrim over the photo, kept as a plain stylesheet gradient
    (no url()) so it can't be affected by the base-URL quirk below. */
 .evangelizing-slide::before {
   content: "";
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.2) 45%, rgba(0, 0, 0, 0.8) 100%);
 }
-.evangelizing-slide .slide-text { position: relative; }
 .evangelizing-slide.active { opacity: 1; }
-.evangelizing-slide .slide-text { max-width: 560px; }
+.evangelizing-slide .slide-text { position: relative; z-index: 2; max-width: 560px; }
 .evangelizing-slide h3 { color: #fff; font-size: 1.3rem; margin-bottom: 10px; }
 .evangelizing-slide p { color: #cfcfcf; font-size: 0.92rem; }
 .evangelizing-dots { display: flex; justify-content: center; gap: 10px; margin-top: 28px; }
@@ -754,7 +768,41 @@ body.lightbox-open { overflow: hidden; }
   .service-list { flex-direction: column; gap: 40px; max-width: 720px; }
   .service-item { flex-direction: row; gap: 24px; align-items: flex-start; }
   .service-item p { max-width: 560px; }
-  .evangelizing-track { aspect-ratio: 4/3; }
+  /* Stack the photo and its caption instead of overlaying them. At this width
+     the scrim and text covered roughly the lower half of the picture. Every
+     slide shares one grid cell, so the crossfade still works and the track
+     takes the height of the tallest caption. */
+  .evangelizing-track {
+    aspect-ratio: auto;
+    display: grid;
+    container-type: inline-size;
+  }
+  .evangelizing-slide {
+    position: relative; inset: auto;
+    grid-area: 1 / 1;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    background-color: var(--surface-alt);
+  }
+  .evangelizing-slide .slide-media {
+    position: relative; inset: auto;
+    aspect-ratio: 4 / 3;
+  }
+  /* No photo underneath the words any more, so the scrim has nothing to do. */
+  .evangelizing-slide::before { display: none; }
+  .evangelizing-slide .slide-text {
+    max-width: none;
+    flex: 1 1 auto;
+    padding: 18px 20px 22px;
+  }
+  /* The caption is on the surface colour now, not on a darkened photo, so it
+     has to take its colours from the palette or it vanishes in light mode. */
+  .evangelizing-slide h3 { color: var(--text); }
+  .evangelizing-slide p { color: var(--text-body); }
+  /* Keep the arrows on the picture rather than over the caption: the media box
+     is 75% of the track's width tall, so its centre sits 37.5cqw down. */
+  .evangelizing-arrow { top: 37.5cqw; }
   section { padding: 80px 0; }
   .hero { padding: 0; }
 }
