@@ -369,6 +369,13 @@ nav { position: relative; }
    detail sitting between the hero and Work, not competing with either. */
 .tech-marquee {
   padding: 36px 0;
+  /* Softens the dot mesh passing behind the ribbon so the small tool labels
+     stay the sharpest thing in the band. backdrop-filter blurs what is painted
+     behind the element only — the ribbon's own text and logos are untouched.
+     Ignored gracefully by browsers without support: the dots simply stay as
+     crisp as they were. */
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 .tech-marquee-viewport {
   overflow: hidden;

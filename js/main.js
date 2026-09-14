@@ -451,11 +451,13 @@ if (lightbox) {
   var RADIUS = 120;    // influence radius
   var EASE = 0.16;     // per-frame approach to target
   var SETTLE = 0.008;  // below this delta a dot counts as at rest
+  var SOFT = 2.1;      // halo spread of a swollen dot, as a multiple of its radius
 
   var dpr = 1, W = 0, H = 0, cols = 0, rows = 0, ox = 0, oy = 0;
   var dots = [], dirty = new Set(), elevated = new Set();
   var px = -1e5, py = -1e5, raf = 0;
   var rgb = '245,245,245', aLo = 0.075, aHi = 0.42;
+  var sprite = null;
 
   // Hover has no meaning on touch, and reduced motion opts out of the
   // interaction entirely — the static mesh still renders in both cases.
@@ -469,14 +471,46 @@ if (lightbox) {
     rgb = (cs.getPropertyValue('--dot-rgb') || '245,245,245').trim();
     aLo = parseFloat(cs.getPropertyValue('--dot-alpha')) || 0.075;
     aHi = parseFloat(cs.getPropertyValue('--dot-alpha-hi')) || 0.42;
+    buildSprite();
+  }
+
+  // A swollen dot is drawn from this pre-rendered soft disc rather than as a
+  // hard-edged arc, which is what gives the hover cluster its blur. Rendering
+  // it once and scaling on draw costs a fraction of building a radial gradient
+  // per dot per frame, and avoids ctx.filter, which is slow and patchily
+  // implemented. Solid to 30% of the radius so small dots still read as dots,
+  // then a smooth falloff to nothing at the edge.
+  function buildSprite() {
+    var n = 64, c = document.createElement('canvas');
+    c.width = c.height = n;
+    var g = c.getContext('2d');
+    var grad = g.createRadialGradient(n / 2, n / 2, 0, n / 2, n / 2, n / 2);
+    grad.addColorStop(0, 'rgba(' + rgb + ',1)');
+    grad.addColorStop(0.30, 'rgba(' + rgb + ',0.92)');
+    grad.addColorStop(0.60, 'rgba(' + rgb + ',0.38)');
+    grad.addColorStop(1, 'rgba(' + rgb + ',0)');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, n, n);
+    sprite = c;
   }
 
   function paint(d) {
     var k = (d.r - BASE_R) / (MAX_R - BASE_R);
-    ctx.fillStyle = 'rgba(' + rgb + ',' + (aLo + (aHi - aLo) * k) + ')';
-    ctx.beginPath();
-    ctx.arc(d.x, d.y, d.r, 0, 6.2832);
-    ctx.fill();
+    var a = aLo + (aHi - aLo) * k;
+    // At rest the dot stays a crisp hairline so the mesh keeps its structure;
+    // the blur only appears as it grows under the pointer, which is exactly
+    // where it would otherwise compete with the hero text.
+    if (k < 0.004 || !sprite) {
+      ctx.fillStyle = 'rgba(' + rgb + ',' + a + ')';
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, 6.2832);
+      ctx.fill();
+      return;
+    }
+    var size = d.r * SOFT * 2;
+    ctx.globalAlpha = a;
+    ctx.drawImage(sprite, d.x - size / 2, d.y - size / 2, size, size);
+    ctx.globalAlpha = 1;
   }
 
   function redrawAll() {
@@ -537,7 +571,7 @@ if (lightbox) {
   }
 
   function frame() {
-    var pad = MAX_R + 1.5, box = pad * 2, settled = [];
+    var pad = MAX_R * SOFT + 1.5, box = pad * 2, settled = [];
     dirty.forEach(function (d) {
       d.r += (d.t - d.r) * EASE;
       if (Math.abs(d.t - d.r) < SETTLE) { d.r = d.t; settled.push(d); }
