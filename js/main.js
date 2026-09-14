@@ -379,3 +379,52 @@ if (lightbox) {
 
   lightboxClose.addEventListener('click', closeLightbox);
 }
+
+// ---------- Tech marquee: keep the track wider than the viewport ----------
+// The marquee scrolls the track left by exactly one set, then restarts. That
+// restart is only invisible while the content still reaches the right edge at
+// the moment it happens — i.e. while (copies - 1) x setWidth >= viewportWidth.
+// Two copies are hard-coded in the HTML, which covers a viewport up to one set
+// wide (~1362px). Anything wider and a blank strip opens up at the right edge
+// for the tail of each cycle, then snaps back full on restart.
+//
+// So: measure one set, clone until there is enough track to cover the viewport,
+// and pin the animation distance to that measured width rather than a
+// percentage of a track whose size now varies.
+(function () {
+  var track = document.querySelector('.tech-marquee-track');
+  if (!track) return;
+  var viewport = track.parentElement;
+  var template = track.querySelector('.tech-marquee-set');
+  if (!template) return;
+
+  function fit() {
+    var setWidth = template.getBoundingClientRect().width;
+    var viewportWidth = viewport.getBoundingClientRect().width;
+    if (!setWidth || !viewportWidth) return;
+
+    // +1 for the copy that scrolls away during the cycle, +1 more as slack so
+    // the seam is never exactly on the edge at fractional zoom levels.
+    var needed = Math.max(2, Math.ceil(viewportWidth / setWidth) + 2);
+    // Only ever add. Removing copies mid-animation would visibly re-jig the
+    // row, and a few extra spans cost nothing.
+    for (var i = track.children.length; i < needed; i++) {
+      track.appendChild(template.cloneNode(true));
+    }
+    track.style.setProperty('--marquee-shift', setWidth + 'px');
+  }
+
+  // Inter loads with display=swap, so a set's width changes when the real face
+  // arrives. Measuring before that pins the shift to the fallback font's
+  // metrics and the loop lands slightly off.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(fit);
+  }
+  fit();
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fit, 150);
+  }, { passive: true });
+})();

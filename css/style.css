@@ -374,9 +374,14 @@ nav { position: relative; }
   opacity: 0.75;
 }
 .tech-icon { width: 18px; height: 18px; flex-shrink: 0; }
+/* The shift is exactly one set's width, so the track lands on an identical
+   frame and the restart is invisible. JS sets --marquee-shift in px once the
+   webfont has settled; the 50% fallback is the correct value for the two
+   copies that ship in the HTML, so the marquee still loops without JS (it
+   just needs a viewport no wider than one set, as it did before). */
 @keyframes tech-marquee-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(calc(-1 * var(--marquee-shift, 50%))); }
 }
 @media (prefers-reduced-motion: reduce) {
   .tech-marquee-track { animation: none; }
