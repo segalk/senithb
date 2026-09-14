@@ -1,10 +1,17 @@
 /* ---------- Variables ---------- */
 /* Dark is the default theme. [data-theme="light"] below overrides it.
-   --accent (#E64A2E) is kept identical in both themes: against the dark
-   theme's #121212 background it measures ~4.8:1 contrast (passes WCAG AA
-   for normal text); against the light theme's white background it's used
-   only on large/bold display text or as a non-text indicator, where the
-   lower AA large-text/UI threshold (3:1) applies. */
+   --accent (#E64A2E) is kept identical in both themes. Measured: 4.80:1 on
+   the dark --bg, 4.45:1 on dark --surface-alt, 3.48:1 on light --bg and
+   3.74:1 on light --surface-alt. So it clears AA for normal text only on the
+   dark background; everywhere else it clears the 3:1 large-text/UI threshold
+   alone.
+   That is fine for the logo, borders, icons and focus rings, but it is NOT
+   currently true of every use: .project-back (0.9rem/600), .about-links a
+   and .aside-link (1rem/700) and .modal-body a (0.95rem/600) are body-size
+   accent text that falls short of 4.5:1 in the light theme. Changing the
+   brand colour is a design decision, so this is recorded rather than
+   silently altered. Form errors already use --error instead for exactly
+   this reason. */
 :root {
   color-scheme: dark;
   --bg: #121212;
@@ -45,8 +52,13 @@
   --surface-alt: #fafafa;
   --text: #141414;
   --text-body: #2B2B2B;
-  --text-light: #7E858B;
-  --text-faint: #9b9b9b;
+  /* Both were below AA in this theme -- #7E858B measured 3.34:1 on --bg and
+     #9b9b9b just 2.48:1, and they carry body copy, card descriptions and
+     project paragraphs, so the 4.5:1 threshold applies rather than the 3:1
+     one for non-text. Darkened the least needed to clear it, keeping each
+     one's hue and the light > faint ordering. */
+  --text-light: #61666B;   /* 5.18:1 on --bg, 5.56:1 on --surface-alt */
+  --text-faint: #6B6B6B;   /* 4.76:1 on --bg, 5.11:1 on --surface-alt */
   --dark: #2B2B2B;
   --border: #e6e6e6;
   --header-bg: rgba(242, 242, 242, 0.9);
