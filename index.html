@@ -413,14 +413,14 @@
 
       <div class="contact-grid reveal">
         <!--
-          FORMSPREE: replace YOUR_FORM_ID below with the id from your form's
-          endpoint (https://formspree.io/f/xxxxxxxx). Until you do, the script
-          blocks submission and shows the failure dialog rather than posting
-          into the void. The action also works without JavaScript — Formspree
-          renders its own confirmation page in that case.
+          Posts to Formspree. The action is a real endpoint, so with JavaScript
+          off the browser submits normally and Formspree renders its own
+          confirmation page; with JavaScript on, js/main.js intercepts and
+          reports the outcome in a dialog instead. The recipient address is
+          configured in the Formspree dashboard, not here.
         -->
         <form class="contact-form" id="contactForm"
-              action="https://formspree.io/f/YOUR_FORM_ID" method="post" novalidate>
+              action="https://formspree.io/f/xvkoebev" method="post" novalidate>
 
           <div class="field" id="f-name">
             <label for="c-name">Your name</label>

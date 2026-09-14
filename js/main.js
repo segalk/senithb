@@ -712,8 +712,9 @@ if (contactForm) {
     });
     if (firstBad) { firstBad.focus(); return; }
 
-    // Guard against shipping the placeholder endpoint: better an honest
-    // failure with a working mailto than a message posted into the void.
+    // Regression net. The endpoint is configured, but if it is ever reset to
+    // the placeholder, an honest failure with a working mailto beats posting
+    // messages into the void.
     if (contactForm.action.indexOf('YOUR_FORM_ID') !== -1) {
       fail('The contact form isn\u2019t connected yet. Please email me directly \u2014 the link below is already filled in.');
       return;
