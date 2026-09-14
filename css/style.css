@@ -445,7 +445,24 @@ nav { position: relative; }
    query below reverts to the original stacked rows (icon left of text). */
 .service-list { display: flex; flex-direction: row; gap: 40px; }
 .service-item { display: flex; flex-direction: column; gap: 20px; flex: 1; }
-.service-bullet { width: 40px; height: 40px; background: var(--text); flex-shrink: 0; }
+/* Holds a service icon in a fixed 40x40 box. The box size is unchanged from
+   the solid placeholder it replaces, so surrounding layout and spacing are
+   untouched. The svg fills the box and its own viewBox handles scaling, so
+   icons with different viewBoxes (96, 128 and 512) all land at the same
+   rendered size without distortion — preserveAspectRatio defaults to
+   xMidYMid meet, which fits and centres rather than cropping or stretching.
+   color (not background) drives the artwork, since every icon now paints in
+   currentColor. */
+.service-bullet {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+}
+.service-bullet svg { width: 100%; height: 100%; display: block; }
 .service-item h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
 .service-item p { color: var(--text-light); font-size: 0.95rem; }
 
