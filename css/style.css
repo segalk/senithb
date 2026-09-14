@@ -562,8 +562,45 @@ nav { position: relative; }
 .about .container { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
 .about-body h2 { font-size: clamp(1.8rem, 3vw, 2.3rem); margin-bottom: 24px; max-width: 544px; }
 .about-body p { color: var(--text-body); margin-bottom: 16px; max-width: 544px; }
-.about-photo { aspect-ratio: 379 / 365; max-width: 379px; margin-left: auto; background: var(--dark); display: flex; align-items: center; justify-content: center; }
-.about-photo svg { width: 30%; height: 30%; color: #4a4a4a; }
+/* Square, because the sources are 2048x2048 -- the old 379/365 placeholder
+   box would have cropped 3.7% off them for nothing. */
+.about-photo {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  /* Both images are absolutely positioned, so there is nothing in flow to size
+     this from -- and margin-left:auto opts the item out of grid stretch. Width
+     has to be stated or the box collapses to zero. */
+  width: 100%;
+  max-width: 379px;
+  margin-left: auto;
+  background: var(--dark);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+.about-photo-img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Frame and source are both 1:1, so cover neither crops nor stretches; it is
+     here so an off-square replacement degrades to a crop, never a squash. */
+  object-fit: cover;
+}
+/* Hover swap. Gated on a real pointer: on a touchscreen :hover latches after a
+   tap and the illustration would just stick. */
+@media (hover: hover) and (pointer: fine) {
+  .about-photo-alt { opacity: 0; transition: opacity 0.45s ease; }
+  .about-photo:hover .about-photo-alt { opacity: 1; }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
+  .about-photo-alt { transition: none; }
+}
+/* Anywhere without a fine pointer the illustration never shows, so keep it out
+   of the layout and off the network. */
+@media not all and (hover: hover) and (pointer: fine) {
+  .about-photo-alt { display: none; }
+}
 
 /* ---------- Contact ---------- */
 /* Social links, sitting under the About copy now that the dedicated
@@ -764,7 +801,7 @@ body.lightbox-open { overflow: hidden; }
   .nav-toggle { display: flex; }
   .work-grid { grid-template-columns: repeat(2, 1fr); }
   .about .container { grid-template-columns: 1fr; }
-  .about-photo { order: -1; max-width: 360px; margin-inline: auto; width: 100%; }
+  .about-photo { order: -1; max-width: 420px; margin-inline: auto; width: 100%; }
   .service-list { flex-direction: column; gap: 40px; max-width: 720px; }
   .service-item { flex-direction: row; gap: 24px; align-items: flex-start; }
   .service-item p { max-width: 560px; }
@@ -807,6 +844,8 @@ body.lightbox-open { overflow: hidden; }
   .hero { padding: 0; }
 }
 @media (max-width: 640px) {
+  /* Fill the content column rather than sitting in a 420px box inside it. */
+  .about-photo { max-width: none; }
   .work-grid, .case-grid { grid-template-columns: 1fr; }
   .project-gallery { grid-template-columns: 1fr; }
   .project-meta { grid-template-columns: 1fr 1fr; }

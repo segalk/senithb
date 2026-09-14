@@ -365,7 +365,14 @@
         </div>
       </div>
       <div class="about-photo reveal">
-        <svg><use href="#icon-user"/></svg>
+        <img class="about-photo-img" src="images/about/senith-photo.webp"
+             width="1000" height="1000" decoding="async" loading="lazy"
+             alt="Senith B, smiling, in a red t-shirt against a pale studio backdrop.">
+        <!-- Same person, illustrated. Decorative: it says nothing the photo
+             above hasn't already said, so it stays out of the a11y tree. -->
+        <img class="about-photo-img about-photo-alt" src="images/about/senith-anime.webp"
+             width="1000" height="1000" decoding="async" loading="lazy"
+             alt="" aria-hidden="true">
       </div>
     </div>
   </section>
