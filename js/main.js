@@ -428,3 +428,159 @@ if (lightbox) {
     resizeTimer = setTimeout(fit, 150);
   }, { passive: true });
 })();
+
+// ---------- Hero dot mesh ----------
+// A faint grid of dots behind the hero; dots near the pointer swell with
+// distance falloff and ease back when it leaves.
+//
+// Cost control: only dots inside the pointer's influence box are ever touched,
+// and each is repainted through its own small clearRect rather than redrawing
+// the whole canvas. Two sets are tracked — `elevated` (dots currently above
+// base, so they can be released when the pointer moves on) and `dirty` (dots
+// still easing, so still needing paint). Splitting them lets the rAF loop stop
+// once everything settles, including while the pointer sits still.
+(function () {
+  var canvas = document.getElementById('dotMesh');
+  var host = canvas && canvas.parentElement;
+  if (!canvas || !host || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+
+  var SPACING = 26;    // px between dots
+  var BASE_R = 1.0;    // resting radius
+  var MAX_R = 3.2;     // radius directly under the pointer
+  var RADIUS = 120;    // influence radius
+  var EASE = 0.16;     // per-frame approach to target
+  var SETTLE = 0.008;  // below this delta a dot counts as at rest
+
+  var dpr = 1, W = 0, H = 0, cols = 0, rows = 0, ox = 0, oy = 0;
+  var dots = [], dirty = new Set(), elevated = new Set();
+  var px = -1e5, py = -1e5, raf = 0;
+  var rgb = '245,245,245', aLo = 0.075, aHi = 0.42;
+
+  // Hover has no meaning on touch, and reduced motion opts out of the
+  // interaction entirely — the static mesh still renders in both cases.
+  function interactive() {
+    return !prefersReducedMotion &&
+      !(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  }
+
+  function readPalette() {
+    var cs = getComputedStyle(document.documentElement);
+    rgb = (cs.getPropertyValue('--dot-rgb') || '245,245,245').trim();
+    aLo = parseFloat(cs.getPropertyValue('--dot-alpha')) || 0.075;
+    aHi = parseFloat(cs.getPropertyValue('--dot-alpha-hi')) || 0.42;
+  }
+
+  function paint(d) {
+    var k = (d.r - BASE_R) / (MAX_R - BASE_R);
+    ctx.fillStyle = 'rgba(' + rgb + ',' + (aLo + (aHi - aLo) * k) + ')';
+    ctx.beginPath();
+    ctx.arc(d.x, d.y, d.r, 0, 6.2832);
+    ctx.fill();
+  }
+
+  function redrawAll() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < dots.length; i++) paint(dots[i]);
+  }
+
+  function build() {
+    var rect = host.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = Math.round(rect.width);
+    H = Math.round(rect.height);
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    cols = Math.floor(W / SPACING) + 1;
+    rows = Math.floor(H / SPACING) + 1;
+    ox = (W - (cols - 1) * SPACING) / 2;
+    oy = (H - (rows - 1) * SPACING) / 2;
+
+    dots = new Array(cols * rows);
+    for (var j = 0, i = 0; j < rows; j++) {
+      for (var c = 0; c < cols; c++, i++) {
+        dots[i] = { x: ox + c * SPACING, y: oy + j * SPACING, r: BASE_R, t: BASE_R };
+      }
+    }
+    dirty.clear();
+    elevated.clear();
+    readPalette();
+    redrawAll();
+  }
+
+  function mark() {
+    elevated.forEach(function (d) { d.t = BASE_R; dirty.add(d); });
+    elevated.clear();
+    if (px < -1e4) return;
+    var c0 = Math.max(0, Math.floor((px - RADIUS - ox) / SPACING));
+    var c1 = Math.min(cols - 1, Math.ceil((px + RADIUS - ox) / SPACING));
+    var r0 = Math.max(0, Math.floor((py - RADIUS - oy) / SPACING));
+    var r1 = Math.min(rows - 1, Math.ceil((py + RADIUS - oy) / SPACING));
+    for (var j = r0; j <= r1; j++) {
+      for (var c = c0; c <= c1; c++) {
+        var d = dots[j * cols + c];
+        if (!d) continue;
+        var dx = d.x - px, dy = d.y - py, d2 = dx * dx + dy * dy;
+        if (d2 > RADIUS * RADIUS) continue;
+        var f = 1 - Math.sqrt(d2) / RADIUS;
+        f = f * f * (3 - 2 * f); // smoothstep, so the cluster has no hard edge
+        d.t = BASE_R + (MAX_R - BASE_R) * f;
+        elevated.add(d);
+        if (d.r !== d.t) dirty.add(d);
+      }
+    }
+  }
+
+  function frame() {
+    var pad = MAX_R + 1.5, box = pad * 2, settled = [];
+    dirty.forEach(function (d) {
+      d.r += (d.t - d.r) * EASE;
+      if (Math.abs(d.t - d.r) < SETTLE) { d.r = d.t; settled.push(d); }
+      ctx.clearRect(d.x - pad, d.y - pad, box, box);
+      paint(d);
+    });
+    for (var i = 0; i < settled.length; i++) dirty.delete(settled[i]);
+    raf = dirty.size ? requestAnimationFrame(frame) : 0;
+  }
+
+  function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+
+  host.addEventListener('pointermove', function (e) {
+    if (!interactive()) return;
+    var r = host.getBoundingClientRect();
+    px = e.clientX - r.left;
+    py = e.clientY - r.top;
+    mark();
+    kick();
+  }, { passive: true });
+
+  host.addEventListener('pointerleave', function () {
+    px = py = -1e5;
+    mark();
+    kick();
+  }, { passive: true });
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(build, 150);
+  }, { passive: true });
+
+  // The theme toggle swaps the palette tokens, so the mesh has to repaint.
+  var themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      setTimeout(function () { readPalette(); redrawAll(); }, 0);
+    });
+  }
+
+  build();
+  // Inter loads with display=swap; a late font swap can reflow the hero and
+  // change its height, so re-measure once it settles.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+})();

@@ -17,6 +17,11 @@
   --dark: #242428;
   --border: #2a2a2e;
   --header-bg: rgba(18, 18, 18, 0.85);
+  /* Hero dot mesh: rgb triplet + resting/peak alpha, so the canvas can read
+     the palette instead of hard-coding a colour per theme. */
+  --dot-rgb: 245, 245, 245;
+  --dot-alpha: 0.075;
+  --dot-alpha-hi: 0.42;
   --shadow-resting: 0 1px 3px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-hover: 0 30px 55px rgba(0, 0, 0, 0.55), 0 12px 24px rgba(0, 0, 0, 0.4);
   --font: 'Inter', 'Helvetica Neue', Arial, sans-serif;
@@ -38,6 +43,9 @@
   --dark: #2B2B2B;
   --border: #e6e6e6;
   --header-bg: rgba(242, 242, 242, 0.9);
+  --dot-rgb: 20, 20, 20;
+  --dot-alpha: 0.085;
+  --dot-alpha-hi: 0.40;
   --shadow-resting: 0 1px 3px rgba(20, 20, 30, 0.10), 0 1px 2px rgba(20, 20, 30, 0.06);
   --shadow-hover: 0 30px 55px rgba(20, 20, 30, 0.18), 0 12px 24px rgba(20, 20, 30, 0.12);
 }
@@ -260,12 +268,30 @@ nav { position: relative; }
    the classic mobile-browser issue where 100vh is taller than what's
    actually visible once the address bar is accounted for. */
 .hero-viewport {
+  position: relative; /* positioning context for the dot-mesh canvas */
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   padding-top: 88px; /* clears the fixed header */
 }
+/* Faint dotted mesh behind the hero. Purely decorative: aria-hidden in the
+   markup and pointer-events:none here, so it never intercepts the CTA or
+   shows up for assistive tech. Sits at inset:0 so it can't overflow. */
+#dotMesh {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+}
+/* Siblings are static, and a positioned element paints above static ones
+   regardless of source order, so the content needs its own stacking level. */
+.hero-viewport > .hero,
+.hero-viewport > .scroll-cue,
+.hero-viewport > .tech-marquee { position: relative; z-index: 1; }
 .hero { flex: 1; display: flex; align-items: center; }
 .hero h1 {
   font-size: clamp(2.4rem, 5vw, 3.4rem);
