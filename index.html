@@ -69,7 +69,7 @@
           <li><a href="#services">Services</a></li>
           <li><a href="#evangelizing">UX Evangelizing</a></li>
           <li><a href="#about">About Me</a></li>
-          <li><a href="mailto:senithb.41@gmail.com" class="nav-cta">Contact</a></li>
+          <li><a href="#contact" class="nav-cta">Contact</a></li>
         </ul>
         <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
       </nav>
@@ -378,7 +378,158 @@
   </section>
 
   <!-- ===== Contact ===== -->
+  <section class="contact" id="contact">
+    <div class="container" data-reveal-group>
+      <div class="section-head reveal">
+        <span class="kicker">Contact.</span>
+        <h2>Let's build something<span class="accent"> good.</span></h2>
+        <p>Project enquiry, a talk or a judging panel, or just a question about the work — tell me what you have in mind and I'll get back to you.</p>
+      </div>
+
+      <div class="contact-grid reveal">
+        <!--
+          FORMSPREE: replace YOUR_FORM_ID below with the id from your form's
+          endpoint (https://formspree.io/f/xxxxxxxx). Until you do, the script
+          blocks submission and shows the failure dialog rather than posting
+          into the void. The action also works without JavaScript — Formspree
+          renders its own confirmation page in that case.
+        -->
+        <form class="contact-form" id="contactForm"
+              action="https://formspree.io/f/YOUR_FORM_ID" method="post" novalidate>
+
+          <div class="field" id="f-name">
+            <label for="c-name">Your name</label>
+            <input type="text" id="c-name" name="name" autocomplete="name"
+                   required aria-required="true" aria-describedby="e-name">
+            <p class="field-error" id="e-name">Please tell me your name.</p>
+          </div>
+
+          <div class="field" id="f-email">
+            <label for="c-email">Email address</label>
+            <input type="email" id="c-email" name="email" autocomplete="email"
+                   required aria-required="true" aria-describedby="e-email">
+            <p class="field-error" id="e-email">That doesn't look like an email address &mdash; I need it to reply.</p>
+          </div>
+
+          <div class="field" id="f-topic">
+            <label for="c-topic">What's this about? <span class="optional">(optional)</span></label>
+            <select id="c-topic" name="topic">
+              <option value="">Choose one&hellip;</option>
+              <option>Project enquiry</option>
+              <option>Speaking or judging</option>
+              <option>Mentoring</option>
+              <option>Something else</option>
+            </select>
+          </div>
+
+          <div class="field" id="f-subject">
+            <label for="c-subject">Subject</label>
+            <input type="text" id="c-subject" name="subject"
+                   required aria-required="true" aria-describedby="e-subject">
+            <p class="field-error" id="e-subject">A short subject line helps me prioritise.</p>
+          </div>
+
+          <div class="field" id="f-message">
+            <label for="c-message">Message</label>
+            <textarea id="c-message" name="message" rows="6"
+                      required aria-required="true" aria-describedby="e-message"></textarea>
+            <p class="field-error" id="e-message">Tell me a little about what you need.</p>
+          </div>
+
+          <!-- Formspree's built-in honeypot. Real people never see it. -->
+          <div class="hp" aria-hidden="true">
+            <label for="c-company">Company (leave this empty)</label>
+            <input type="text" id="c-company" name="_gotcha" tabindex="-1" autocomplete="off">
+          </div>
+
+          <p class="privacy-note">
+            Your details go straight to my inbox via Formspree and are only used to reply.
+            Nothing is shared, sold or added to a mailing list.
+          </p>
+
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <span id="submitLabel">Send message</span>
+          </button>
+        </form>
+
+        <aside class="contact-aside">
+          <div class="aside-block">
+            <h3>Prefer your own inbox?</h3>
+            <p>Some things are easier as a normal email &mdash; especially if you're sending a brief, a job spec or anything with attachments.</p>
+            <a class="aside-link" href="mailto:senithb.41@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 6.5l9 6.5 9-6.5"/>
+              </svg>
+              senithb.41@gmail.com
+            </a>
+          </div>
+
+          <div class="aside-block">
+            <h3>Find me elsewhere</h3>
+            <p>Happy to connect, even if there's nothing specific yet.</p>
+            <a class="aside-link" href="https://www.linkedin.com/in/senith-b-gajanayake-13705046/" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.05c.53-.95 1.82-1.95 3.75-1.95 4 0 4.75 2.5 4.75 5.8V21h-4v-4.9c0-1.17-.02-2.68-1.7-2.68-1.7 0-1.96 1.28-1.96 2.6V21h-4z"/></svg>
+              LinkedIn
+            </a>
+            <a class="aside-link" href="https://www.behance.net/SenithB" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.2 5.5c1.9 0 3.3.7 3.3 2.6 0 1.2-.6 1.9-1.5 2.3 1.3.4 2 1.4 2 2.8 0 2.3-1.9 3.3-4 3.3H2V5.5zm-.4 4.4c.9 0 1.5-.4 1.5-1.3 0-1-.7-1.2-1.6-1.2H4.7v2.5zm.2 4.7c1 0 1.8-.35 1.8-1.5 0-1.15-.7-1.5-1.75-1.5H4.7v3zM18.3 7.1h-4.6V5.9h4.6zm-2.2 2.4c2.5 0 4 1.7 3.9 4.5h-5.9c.1 1.2.8 1.9 2 1.9.9 0 1.5-.35 1.8-1h1.95c-.4 1.7-1.85 2.6-3.8 2.6-2.6 0-4.1-1.75-4.1-4.2 0-2.4 1.6-4.3 4.15-3.8zm-1.95 3.2h3.75c-.1-1.1-.75-1.7-1.8-1.7-1.1 0-1.8.6-1.95 1.7z"/></svg>
+              Behance
+            </a>
+          </div>
+
+          <div class="aside-block">
+            <span class="response-time"><span class="dot"></span> Usually replies in 2&ndash;3 days</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
 </main>
+
+<!-- ===== Contact result dialogs ===== -->
+<!-- Native <dialog> + showModal(): focus trapping, Escape-to-close and an
+     inert background come from the platform rather than hand-rolled JS. -->
+<dialog class="modal" id="sentModal" aria-labelledby="sentTitle">
+  <div class="modal-inner">
+    <button type="button" class="modal-close" data-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <span class="modal-badge is-ok" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    </span>
+    <h2 class="modal-title" id="sentTitle">Message sent</h2>
+    <p class="modal-body">
+      Thanks &mdash; that's landed. I'll reply to <strong id="echoEmail">your inbox</strong>,
+      usually within 2&ndash;3 days.
+    </p>
+    <p class="modal-body">
+      If it's urgent, you can also reach me at
+      <a href="mailto:senithb.41@gmail.com">senithb.41@gmail.com</a>.
+    </p>
+    <button type="button" class="modal-btn" data-close autofocus>Done</button>
+  </div>
+</dialog>
+
+<dialog class="modal" id="failModal" aria-labelledby="failTitle">
+  <div class="modal-inner">
+    <button type="button" class="modal-close" data-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <span class="modal-badge is-bad" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 7v7"/><path d="M12 17.2v.1"/></svg>
+    </span>
+    <h2 class="modal-title" id="failTitle">That didn't send</h2>
+    <p class="modal-body" id="failReason">
+      Something went wrong on my end &mdash; nothing you did. Your message is still in the
+      form, so nothing is lost.
+    </p>
+    <p class="modal-body">
+      <a href="#" id="mailtoFallback">Open it in your email app instead</a> &mdash;
+      it'll be pre-filled with everything you typed.
+    </p>
+    <button type="button" class="modal-btn" data-close autofocus>Back to the form</button>
+  </div>
+</dialog>
 
 <!-- ===== Footer ===== -->
 <footer class="site-footer">

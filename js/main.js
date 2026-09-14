@@ -75,7 +75,10 @@ if (navIndicator) {
 
 // ---------- Scroll-spy active nav link ----------
 var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
-var navLinks = Array.prototype.slice.call(document.querySelectorAll('#navList a'));
+// The Contact CTA is excluded: it points at #contact like any other link, but
+// it's a pill button, and letting scroll-spy mark it .active would slide the
+// nav underline indicator underneath it.
+var navLinks = Array.prototype.slice.call(document.querySelectorAll('#navList a:not(.nav-cta)'));
 if (sections.length && navLinks.length && 'IntersectionObserver' in window) {
   var spy = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
@@ -584,3 +587,162 @@ if (lightbox) {
   // change its height, so re-measure once it settles.
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
 })();
+
+
+// ---------- Contact form (Formspree) ----------
+// Submits over fetch so the visitor never leaves the page, and reports the
+// outcome in a modal. The <form action> is a real Formspree endpoint, so with
+// JavaScript off the browser posts normally and Formspree renders its own
+// confirmation page instead.
+var contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  var submitBtn = document.getElementById('submitBtn');
+  var submitLabel = document.getElementById('submitLabel');
+  var sentModal = document.getElementById('sentModal');
+  var failModal = document.getElementById('failModal');
+  var failReason = document.getElementById('failReason');
+  var echoEmail = document.getElementById('echoEmail');
+  var mailtoFallback = document.getElementById('mailtoFallback');
+  var contactFields = ['name', 'email', 'subject', 'message'];
+  var modalOpener = null;
+
+  var val = function (id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  };
+
+  function openModal(dialog) {
+    document.body.classList.add('modal-open');
+    if (typeof dialog.showModal === 'function') {
+      dialog.showModal();
+    } else {
+      // No <dialog> support: fall back to a plain visible block rather than
+      // leaving the visitor with no confirmation at all.
+      dialog.setAttribute('open', '');
+    }
+  }
+
+  // Runs for every route out of the dialog -- close button, backdrop, and the
+  // Escape key, which fires 'close' natively without going through our code.
+  function afterClose() {
+    document.body.classList.remove('modal-open');
+    // Focus can't go back to whatever was focused when the dialog opened: the
+    // submit button was disabled mid-send, which drops focus to <body>. Send
+    // it to the button itself so the keyboard lands back on the form.
+    var target = (modalOpener && modalOpener.isConnected && !modalOpener.disabled)
+      ? modalOpener : submitBtn;
+    if (target && target.focus) target.focus();
+  }
+
+  function closeModal(dialog) {
+    if (typeof dialog.close === 'function') dialog.close();  // fires 'close'
+    else { dialog.removeAttribute('open'); afterClose(); }
+  }
+
+  [sentModal, failModal].forEach(function (dialog) {
+    if (!dialog) return;
+    dialog.querySelectorAll('[data-close]').forEach(function (btn) {
+      btn.addEventListener('click', function () { closeModal(dialog); });
+    });
+    // A modal dialog's ::backdrop routes its clicks to the dialog element, so
+    // a click whose target is the dialog rather than .modal-inner is a
+    // backdrop hit. This only works while the dialog is actually centred --
+    // see the margin note in the stylesheet.
+    dialog.addEventListener('click', function (e) {
+      if (e.target === dialog) closeModal(dialog);
+    });
+    dialog.addEventListener('close', afterClose);
+  });
+
+  // Hands back everything they typed, already in their mail client, so a
+  // failed send is recoverable rather than lost work.
+  function buildMailto() {
+    if (!mailtoFallback) return;
+    var body = 'Name: ' + val('c-name');
+    if (val('c-topic')) body += '\nTopic: ' + val('c-topic');
+    body += '\n\n' + val('c-message');
+    mailtoFallback.href = 'mailto:senithb.41@gmail.com'
+      + '?subject=' + encodeURIComponent(val('c-subject') || 'Website enquiry')
+      + '&body=' + encodeURIComponent(body);
+  }
+
+  function setBusy(busy) {
+    submitBtn.disabled = busy;
+    submitBtn.setAttribute('aria-busy', String(busy));
+    submitLabel.textContent = busy ? 'Sending\u2026' : 'Send message';
+    var spinner = submitBtn.querySelector('.spinner');
+    if (busy && !spinner) {
+      var s = document.createElement('span');
+      s.className = 'spinner';
+      submitBtn.insertBefore(s, submitLabel);
+    } else if (!busy && spinner) {
+      spinner.remove();
+    }
+  }
+
+  function markField(id, bad) {
+    document.getElementById('f-' + id).classList.toggle('has-error', bad);
+    document.getElementById('c-' + id).setAttribute('aria-invalid', String(bad));
+  }
+
+  // Validate on blur, not on every keystroke: flagging a half-typed address
+  // as wrong is just noise.
+  contactFields.forEach(function (f) {
+    var el = document.getElementById('c-' + f);
+    el.addEventListener('blur', function () { markField(f, !el.checkValidity()); });
+  });
+
+  function fail(message) {
+    if (failReason && message) failReason.textContent = message;
+    buildMailto();
+    openModal(failModal);
+  }
+
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    // Captured before setBusy() disables the button and focus falls to <body>.
+    modalOpener = submitBtn;
+
+    var firstBad = null;
+    contactFields.forEach(function (f) {
+      var el = document.getElementById('c-' + f);
+      var bad = !el.checkValidity();
+      markField(f, bad);
+      if (bad && !firstBad) firstBad = el;
+    });
+    if (firstBad) { firstBad.focus(); return; }
+
+    // Guard against shipping the placeholder endpoint: better an honest
+    // failure with a working mailto than a message posted into the void.
+    if (contactForm.action.indexOf('YOUR_FORM_ID') !== -1) {
+      fail('The contact form isn\u2019t connected yet. Please email me directly \u2014 the link below is already filled in.');
+      return;
+    }
+
+    setBusy(true);
+    fetch(contactForm.action, {
+      method: 'POST',
+      body: new FormData(contactForm),
+      headers: { Accept: 'application/json' }
+    }).then(function (res) {
+      if (res.ok) {
+        if (echoEmail) echoEmail.textContent = val('c-email') || 'your inbox';
+        openModal(sentModal);
+        contactForm.reset();
+        contactFields.forEach(function (f) { markField(f, false); });
+        return;
+      }
+      return res.json().then(function (data) {
+        var msg = data && data.errors && data.errors.length
+          ? data.errors.map(function (x) { return x.message; }).join(' ')
+          : null;
+        fail(msg);
+      }, function () { fail(null); });
+    }).catch(function () {
+      // Offline, DNS, blocked request — anything that never reached Formspree.
+      fail('I couldn\u2019t reach the server. Check your connection, or email me directly \u2014 the link below is already filled in.');
+    }).then(function () {
+      setBusy(false);
+    });
+  });
+}
