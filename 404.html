@@ -20,8 +20,13 @@
   reference would break either at depth or after the move to a custom domain.
 -->
 <style>
-  :root { color-scheme: dark; --bg:#121212; --text:#f5f5f5; --muted:#a0a6ad; --accent:#E64A2E; }
-  :root[data-theme="light"] { color-scheme: light; --bg:#f2f2f2; --text:#141414; --muted:#7E858B; }
+  /* Mirrors the main palette. --accent-strong is the fill behind white text:
+     white on the brand red is only 3.90:1. --muted is darker in the light theme for
+     the same reason the main stylesheet darkened --text-light. */
+  :root { color-scheme: dark; --bg:#121212; --text:#f5f5f5; --muted:#a0a6ad;
+          --accent:#E74E33; --accent-strong:#C83318; }
+  :root[data-theme="light"] { color-scheme: light; --bg:#f2f2f2; --text:#141414;
+          --muted:#61666B; --accent:#BF3117; --accent-strong:#BF3117; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     min-height: 100svh;
@@ -41,7 +46,7 @@
   p { color: var(--muted); margin-bottom: 34px; }
   .home {
     display: inline-flex; align-items: center; gap: 10px;
-    background: var(--accent); color: #fff; text-decoration: none;
+    background: var(--accent-strong); color: #fff; text-decoration: none;
     font-weight: 700; font-size: 0.98rem;
     padding: 15px 30px; border-radius: 999px;
     transition: transform 0.25s ease;

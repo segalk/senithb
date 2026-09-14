@@ -1,17 +1,20 @@
 /* ---------- Variables ---------- */
 /* Dark is the default theme. [data-theme="light"] below overrides it.
-   --accent (#E64A2E) is kept identical in both themes. Measured: 4.80:1 on
-   the dark --bg, 4.45:1 on dark --surface-alt, 3.48:1 on light --bg and
-   3.74:1 on light --surface-alt. So it clears AA for normal text only on the
-   dark background; everywhere else it clears the 3:1 large-text/UI threshold
-   alone.
-   That is fine for the logo, borders, icons and focus rings, but it is NOT
-   currently true of every use: .project-back (0.9rem/600), .about-links a
-   and .aside-link (1rem/700) and .modal-body a (0.95rem/600) are body-size
-   accent text that falls short of 4.5:1 in the light theme. Changing the
-   brand colour is a design decision, so this is recorded rather than
-   silently altered. Form errors already use --error instead for exactly
-   this reason. */
+
+   The accent is split across two tokens rather than one, because a single
+   value cannot serve both roles. The brand red is fine as text on the dark
+   background but only 3.48:1 on the light one, and white sitting ON it is
+   3.90:1 in either theme -- so solid fills carrying white text fail
+   everywhere, while accent-as-text fails only in the light theme.
+
+     --accent         text, borders, icons, the logo. #E74E33 on dark;
+                      #BF3117 on light, where the brand red is only 3.48:1.
+     --accent-strong  fills behind white text -- .hero-cta, .submit-btn,
+                      .modal-btn. Darker in both themes.
+
+   The upshot is that the brand red keeps full strength on dark everywhere
+   except those three buttons. Status colours stay separate again: --error
+   and --success are not the accent, for the same contrast reason. */
 :root {
   color-scheme: dark;
   --bg: #121212;
@@ -20,7 +23,18 @@
   --text-body: #d6d6d6;
   --text-light: #a0a6ad;
   --text-faint: #8b9199;
-  --accent: #E64A2E;
+  /* #E64A2E nudged up by 5/255 -- visually the same red, but it was 4.45:1
+     on --surface-alt, a hair under AA, which showed up on the contact card's
+     links. Now 4.94:1 on --bg and 4.58:1 on --surface-alt. */
+  --accent: #E74E33;
+  /* Solid fills that carry white text need to be darker than --accent: white
+     on the brand red is only 3.90:1, which fails AA in BOTH themes. --accent
+     itself barely moves here because it already passes as text, so the red
+     keeps its full strength everywhere except those fills. The -rgb triplets
+     exist so the glows below can use rgba() -- same approach as --dot-rgb. */
+  --accent-strong: #C83318;        /* white on this: 5.33:1 */
+  --accent-rgb: 231, 78, 51;
+  --accent-strong-rgb: 200, 51, 24;
   --dark: #242428;
   --border: #2a2a2e;
   --header-bg: rgba(18, 18, 18, 0.85);
@@ -59,6 +73,13 @@
      one's hue and the light > faint ordering. */
   --text-light: #61666B;   /* 5.18:1 on --bg, 5.56:1 on --surface-alt */
   --text-faint: #6B6B6B;   /* 4.76:1 on --bg, 5.11:1 on --surface-alt */
+  /* Here the accent itself has to move: at #E64A2E it is 3.48:1 on --bg, and
+     it carries body-size text (.project-back, .about-links a, .aside-link,
+     .modal-body a). One value covers both roles in this theme. */
+  --accent: #BF3117;               /* 5.12:1 on --bg; white on it: 5.73:1 */
+  --accent-strong: #BF3117;
+  --accent-rgb: 191, 49, 23;
+  --accent-strong-rgb: 191, 49, 23;
   --dark: #2B2B2B;
   --border: #e6e6e6;
   --header-bg: rgba(242, 242, 242, 0.9);
@@ -330,17 +351,17 @@ nav { position: relative; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--accent);
+  background: var(--accent-strong);
   color: #fff;
   font-weight: 700;
   font-size: 0.98rem;
   padding: 16px 30px;
   border-radius: 999px;
   margin-top: 40px;
-  box-shadow: 0 8px 24px rgba(230, 74, 46, 0.25);
+  box-shadow: 0 8px 24px rgba(var(--accent-strong-rgb), 0.25);
   transition: transform var(--transition), box-shadow var(--transition);
 }
-.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(230, 74, 46, 0.35); }
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(var(--accent-strong-rgb), 0.35); }
 .hero-cta svg { transition: transform var(--transition); }
 .hero-cta:hover svg { transform: translateX(3px); }
 
@@ -615,7 +636,7 @@ nav { position: relative; }
 .field input:focus, .field select:focus, .field textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(230, 74, 46, 0.22);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.22);
 }
 .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
   outline: 2px solid var(--accent);
@@ -635,13 +656,13 @@ nav { position: relative; }
 .privacy-note { font-size: 0.86rem; color: var(--text-body); margin: 0 0 24px; max-width: 52ch; }
 .submit-btn {
   display: inline-flex; align-items: center; gap: 10px;
-  background: var(--accent); color: #fff;
+  background: var(--accent-strong); color: #fff;
   font-weight: 700; font-size: 0.98rem;
   padding: 16px 34px; border-radius: 999px;
-  box-shadow: 0 8px 24px rgba(230, 74, 46, 0.25);
+  box-shadow: 0 8px 24px rgba(var(--accent-strong-rgb), 0.25);
   transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
 }
-.submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(230, 74, 46, 0.35); }
+.submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(var(--accent-strong-rgb), 0.35); }
 .submit-btn:disabled { opacity: 0.65; cursor: progress; transform: none; box-shadow: none; }
 .spinner {
   width: 15px; height: 15px; border-radius: 50%;
@@ -716,7 +737,7 @@ nav { position: relative; }
 .modal-btn {
   margin-top: 14px;
   display: inline-flex; align-items: center; justify-content: center;
-  background: var(--accent); color: #fff;
+  background: var(--accent-strong); color: #fff;
   font-weight: 700; font-size: 0.94rem;
   padding: 13px 28px; border-radius: 999px;
   transition: transform var(--transition);
