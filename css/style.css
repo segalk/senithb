@@ -307,14 +307,20 @@ nav { position: relative; }
 
 /* ---------- Hero ---------- */
 /* Full-viewport hero: the hero content, scroll cue, and tech marquee
-   together fill exactly one screen on load, so Work starts fully below
-   the fold. 100dvh (with 100vh as a fallback for older browsers) avoids
-   the classic mobile-browser issue where 100vh is taller than what's
-   actually visible once the address bar is accounted for. */
+   together fill one screen on load, so Work starts below the fold.
+
+   svh, NOT dvh. dvh is the *dynamic* viewport height, so it tracks the
+   mobile address bar as it collapses -- the hero grew 78px the instant you
+   started scrolling and every section below it lurched down by the same
+   amount. svh is the height with the browser chrome fully expanded: a
+   constant, so the hero never resizes and nothing below it moves. The cost
+   is that a sliver of the next section shows once the bar retracts, which is
+   much cheaper than a reflow on the first scroll. 100vh stays as the
+   fallback for browsers predating svh. */
 .hero-viewport {
   position: relative; /* positioning context for the dot-mesh canvas */
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   padding-top: 88px; /* clears the fixed header */
