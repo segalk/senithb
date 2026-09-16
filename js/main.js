@@ -164,15 +164,47 @@ if (revealEls.length && 'IntersectionObserver' in window && !prefersReducedMotio
 
   document.body.classList.add('reveal-armed');
 
+  var reveal = function (el) {
+    el.classList.add('in-view');
+  };
+
+  // threshold MUST be 0. A fractional threshold asks for a share of the
+  // element's AREA to be on screen, which an element taller than the viewport
+  // can never supply: .project-content is ~5400px on a 390px-wide phone, so at
+  // a 0.15 threshold its best possible ratio is 0.145 and the callback never
+  // fired -- the entire case-study body stayed at opacity 0 on mobile while
+  // being fine on desktop, where the taller viewport cleared the same bar.
+  // Zero-height elements had the same problem. With threshold 0 any overlap
+  // counts, so the trigger no longer depends on how tall the element is; the
+  // negative rootMargin is what keeps the "reveals as it comes up" feel.
   var revealObserver = new IntersectionObserver(function (entries, obs) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
+        reveal(entry.target);
         obs.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
   revealEls.forEach(function (el) { revealObserver.observe(el); });
+
+  // Failsafe. A decorative animation should never be the only thing between a
+  // reader and the content, so anything that has been scrolled to but is still
+  // hidden gets shown regardless of what the observer did. Runs once images
+  // have settled (late loads shift layout on slow mobile connections) and
+  // again shortly after.
+  var sweep = function () {
+    document.querySelectorAll('.reveal:not(.in-view)').forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight) {
+        reveal(el);
+        revealObserver.unobserve(el);
+      }
+    });
+  };
+  // Deliberately not on scroll: that would force a layout every frame on the
+  // very devices this is meant to help, and the observer stays subscribed
+  // until it fires, so it already covers anything that shifts later.
+  window.addEventListener('load', sweep);
+  setTimeout(sweep, 3000);
 }
 
 // ---------- Hero typewriter ----------
