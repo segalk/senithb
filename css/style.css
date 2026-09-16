@@ -58,6 +58,10 @@
   --success: #4ADE80;
   --container: 1280px;
   --container-pad: 64px;
+  /* The fixed header's height. Used by the header itself, by the hero's top
+     padding, by the mobile nav's offset, and by scroll-padding-top below --
+     they have to agree, so they read from here. */
+  --header-h: 88px;
   --transition: 0.25s ease;
 }
 :root[data-theme="light"] {
@@ -96,7 +100,16 @@
 
 /* ---------- Reset ---------- */
 * , *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* Without this, an anchor scrolls its target flush to the top of the
+     viewport and the fixed header sits on top of it: section kickers landed
+     9px under the header, and the logo's #home link scrolled past the hero's
+     own top padding so the hero jammed against the nav. scroll-padding-top
+     shifts the resting position of every anchor jump and of
+     scrollIntoView({block:'start'}) by the header's height. */
+  scroll-padding-top: var(--header-h);
+}
 body {
   font-family: var(--font);
   color: var(--text);
@@ -176,7 +189,7 @@ body.reveal-armed .reveal:not(.in-view) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 88px;
+  height: var(--header-h);
 }
 .logo { font-size: 24px; font-weight: 700; letter-spacing: -0.25px; line-height: 1; }
 .logo span { color: var(--accent); }
@@ -323,7 +336,7 @@ nav { position: relative; }
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  padding-top: 88px; /* clears the fixed header */
+  padding-top: var(--header-h); /* clears the fixed header */
 }
 /* Faint dotted mesh behind the hero. Purely decorative: aria-hidden in the
    markup and pointer-events:none here, so it never intercepts the CTA or
@@ -1055,7 +1068,7 @@ body.lightbox-open { overflow: hidden; }
 body.nav-open .nav-list {
   display: flex;
   position: fixed;
-  top: 88px; left: 0; right: 0;
+  top: var(--header-h); left: 0; right: 0;
   background: var(--bg);
   flex-direction: column;
   padding: 24px;
