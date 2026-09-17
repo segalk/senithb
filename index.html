@@ -185,24 +185,12 @@
         <button class="filter-btn" data-filter="branding">Branding</button>
         <button class="filter-btn" data-filter="logo-design">Logo Design</button>
       </div>
+      <!-- Card order is declared by data-order, not by position in this file, and
+           js/main.js sorts the grid to match on load. Source order here is kept
+           in sync so the page is already correct without JavaScript; the sort is
+           what stops a card appended later from silently landing last. -->
       <div class="work-grid" id="workGrid" data-reveal-group>
-        <a href="project.html?id=3" class="work-card reveal" data-category="logo-design">
-          <div class="thumb-block has-image" style="background-image:url('images/work/athirilli/09-work-thumbnail-3d.jpg')"></div>
-          <div class="info">
-            <span>Logo Design</span>
-            <h3>Athirilli Brand Identity</h3>
-            <p>A mosaic-tile mark and Sinhala wordmark for a Sri Lankan bed linen brand.</p>
-          </div>
-        </a>
-        <a href="project.html?id=4" class="work-card reveal" data-category="ux-product">
-          <div class="thumb-block has-image" style="background-image:url('images/work/conditional-formatting/thumbnail.png')"></div>
-          <div class="info">
-            <span>UX &amp; Product</span>
-            <h3>Conditional Formatting for IFS Cloud</h3>
-            <p>Bringing spreadsheet-style, rule-based formatting to dense enterprise data lists.</p>
-          </div>
-        </a>
-        <a href="project.html?id=1" class="work-card reveal" data-category="ux-product">
+        <a href="project.html?id=1" class="work-card reveal" data-category="ux-product" data-order="1">
           <div class="thumb-block has-image" style="background-image:url('images/work/navigation-redesign/thumbnail.png')"></div>
           <div class="info">
             <span>UX &amp; Product</span>
@@ -210,15 +198,23 @@
             <p>Consolidating fragmented navigation into one consistent interaction model.</p>
           </div>
         </a>
-        <a href="project.html?id=6" class="work-card reveal" data-category="ux-product">
-          <div class="thumb-block has-image" style="background-image:url('images/work/nike/thumbnail.png')"></div>
+        <a href="project.html?id=4" class="work-card reveal" data-category="ux-product" data-order="2">
+          <div class="thumb-block has-image" style="background-image:url('images/work/conditional-formatting/thumbnail.png')"></div>
           <div class="info">
             <span>UX &amp; Product</span>
-            <h3>Nike Web App Re-Touch</h3>
-            <p>A self-initiated concept re-skin — consumer visual craft and one transition, prototyped until it felt right.</p>
+            <h3>Conditional Formatting for IFS Cloud</h3>
+            <p>Bringing spreadsheet-style, rule-based formatting to dense enterprise data lists.</p>
           </div>
         </a>
-        <a href="project.html?id=2" class="work-card reveal" data-category="ux-product">
+        <a href="project.html?id=5" class="work-card reveal" data-category="ux-product" data-order="3">
+          <div class="thumb-block has-image" style="background-image:url('images/work/remote-assistance/thumbnail.png')"></div>
+          <div class="info">
+            <span>UX &amp; Product</span>
+            <h3>White-Labelling IFS Remote Assistance</h3>
+            <p>Making a licensed AR collaboration product belong inside an enterprise field service suite.</p>
+          </div>
+        </a>
+        <a href="project.html?id=2" class="work-card reveal" data-category="ux-product" data-order="4">
           <div class="thumb-block has-image" style="background-image:url('images/work/spatial-ui/thumbnail.png')"></div>
           <div class="info">
             <span>UX &amp; Product</span>
@@ -226,12 +222,31 @@
             <p>Enterprise ERP data rebuilt for a head-mounted display, where contrast is added rather than blocked.</p>
           </div>
         </a>
-        <a href="project.html?id=5" class="work-card reveal" data-category="ux-product">
-          <div class="thumb-block has-image" style="background-image:url('images/work/remote-assistance/thumbnail.png')"></div>
+        <a href="project.html?id=7" class="work-card reveal" data-category="branding" data-order="5">
+          <!-- TODO(Senith): thumbnail. Drop the file in images/work/decryptogen/ and
+               swap this line for:
+               <div class="thumb-block has-image" style="background-image:url('images/work/decryptogen/thumbnail.jpg')"></div> -->
+          <div class="thumb-block"></div>
+          <div class="info">
+            <span>Branding</span>
+            <h3>Heritage Illustration System for Decryptogen</h3>
+            <p>Sri Lankan heritage motifs split down the middle &mdash; one half hand-painted, one half engineered &mdash; carried from a website hero to a trade-show stand.</p>
+          </div>
+        </a>
+        <a href="project.html?id=6" class="work-card reveal" data-category="ux-product" data-order="6">
+          <div class="thumb-block has-image" style="background-image:url('images/work/nike/thumbnail.png')"></div>
           <div class="info">
             <span>UX &amp; Product</span>
-            <h3>White-Labelling IFS Remote Assistance</h3>
-            <p>Making a licensed AR collaboration product belong inside an enterprise field service suite.</p>
+            <h3>Nike Web App Re-Touch</h3>
+            <p>A self-initiated concept re-skin &mdash; consumer visual craft and one transition, prototyped until it felt right.</p>
+          </div>
+        </a>
+        <a href="project.html?id=3" class="work-card reveal" data-category="logo-design" data-order="7">
+          <div class="thumb-block has-image" style="background-image:url('images/work/athirilli/09-work-thumbnail-3d.jpg')"></div>
+          <div class="info">
+            <span>Logo Design</span>
+            <h3>Athirilli Brand Identity</h3>
+            <p>A mosaic-tile mark and Sinhala wordmark for a Sri Lankan bed linen brand.</p>
           </div>
         </a>
       </div>
@@ -508,7 +523,7 @@
           </div>
 
           <div class="aside-block">
-            <span class="response-time"><span class="dot"></span> Usually replies in 2&ndash;3 days</span>
+            <span class="response-time"><span class="dot"></span> Usually replies within 24 hours</span>
           </div>
         </aside>
       </div>

@@ -351,6 +351,35 @@
           ]
         }
       ]
+    },
+    {
+      id: 7,
+      title: 'Heritage Illustration System for Decryptogen',
+      category: 'Branding',
+      summary: 'Sri Lankan heritage motifs split down the middle \u2014 one half hand-painted, one half engineered \u2014 carried from a website hero to a trade-show stand.',
+      client: 'Decryptogen',
+      clientUrl: 'https://decryptogen.com',
+      timeline: '2024',
+
+      // ---------------------------------------------------------------
+      // TODO(Senith): everything below is a placeholder awaiting your copy.
+      // Replace each string in place; the keys and their order already match
+      // the other entries, so nothing else needs touching.
+      //
+      // Images: drop files in images/work/decryptogen/ and point `cover` at
+      // one of them, then add the rest to `gallery` as
+      // { src: '...', alt: '...' } in the same shape the other projects use.
+      // Card thumbnail is a separate slot -- see the TODO in index.html.
+      // ---------------------------------------------------------------
+      role: 'TODO: your role on this project',
+      tools: 'TODO: tools used',
+      cover: null,
+      overview: 'TODO: overview copy.',
+      challenge: 'TODO: challenge copy.',
+      solution: 'TODO: solution copy.',
+      highlights: ['TODO: highlight one', 'TODO: highlight two', 'TODO: highlight three'],
+      results: 'TODO: results copy.',
+      gallery: []
     }
   ].map(function (p) {
     p.summary = p.summary || 'Simplifying wayfinding across a dense enterprise platform.';

@@ -94,6 +94,22 @@ if (sections.length && navLinks.length && 'IntersectionObserver' in window) {
 }
 
 // ---------- Work filters ----------
+// ---------- Work grid order ----------
+// The grid's order is declared per card with data-order rather than by where the
+// card happens to sit in index.html, so a card added later lands where it is
+// meant to instead of wherever it was pasted. Source order is kept in sync, so
+// this is a guard rather than the mechanism -- with JavaScript off the markup is
+// already right. Runs before the scroll-reveal setup further down, which numbers
+// the stagger by DOM position and would otherwise cascade in the old order.
+var workGrid = document.getElementById('workGrid');
+if (workGrid) {
+  Array.prototype.slice.call(workGrid.children)
+    .sort(function (a, b) {
+      return (+a.getAttribute('data-order') || 0) - (+b.getAttribute('data-order') || 0);
+    })
+    .forEach(function (card) { workGrid.appendChild(card); });
+}
+
 var filterButtons = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
 var workCards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
 if (filterButtons.length && workCards.length) {
