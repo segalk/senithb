@@ -312,8 +312,15 @@ nav { position: relative; }
 .nav-toggle {
   display: none;
   flex-direction: column;
+  justify-content: center;
   gap: 5px;
   width: 26px;
+  /* The three bars are only 16px tall together, well under the 24px minimum
+     tap target (WCAG 2.2 AA, 2.5.8). Vertical padding grows the hit area to
+     26x32 without moving the bars: .nav-wrap centres its children, so the
+     extra height is split evenly above and below. Padding, not height, so
+     box-sizing does not eat into the 26px the bars need. */
+  padding: 8px 0;
 }
 .nav-toggle span { height: 2px; width: 100%; background: var(--text); border-radius: 2px; transition: transform var(--transition), opacity var(--transition), background var(--transition); }
 .nav-toggle:hover span { background: var(--accent); }
@@ -619,11 +626,34 @@ nav { position: relative; }
 .slide-count { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
   text-transform: uppercase; opacity: 0.75; margin-left: 8px; vertical-align: middle; }
 .evangelizing-slide p { color: #cfcfcf; font-size: 0.92rem; }
-.evangelizing-dots { display: flex; justify-content: center; gap: 10px; margin-top: 28px; }
-.evangelizing-dots button { width: 9px; height: 9px; border-radius: 50%; background: var(--text-faint); transition: background var(--transition), transform var(--transition); }
-.evangelizing-dots button:hover:not(.active) { background: var(--text-light); }
-.evangelizing-dots button:focus-visible { outline-offset: 3px; }
-.evangelizing-dots button.active { background: var(--accent); transform: scale(1.25); }
+/* The dot a person sees is 9px; the button they have to hit is 24x24 (WCAG
+   2.2 AA, 2.5.8). The circle moves to ::before so the padded box stays
+   invisible, and the row's gap drops to 0 because each button now carries
+   its own spacing -- dot centres end up 24px apart instead of 19px, which is
+   also what the criterion's spacing exception would have required anyway.
+   The focus ring moves to ::before too, so it keeps hugging the dot rather
+   than tracing the larger hit box. */
+.evangelizing-dots { display: flex; justify-content: center; gap: 0; margin-top: 28px; }
+.evangelizing-dots button {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+}
+.evangelizing-dots button::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  transition: background var(--transition), transform var(--transition);
+}
+.evangelizing-dots button:hover:not(.active)::before { background: var(--text-light); }
+.evangelizing-dots button:focus-visible { outline: none; }
+.evangelizing-dots button:focus-visible::before { outline: 2px solid var(--accent); outline-offset: 3px; }
+.evangelizing-dots button.active::before { background: var(--accent); transform: scale(1.25); }
 
 /* ---------- Contact ---------- */
 .contact-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: start; }
@@ -831,12 +861,36 @@ body.modal-open { overflow: hidden; }
   color: var(--text-light);
 }
 .footer-row .logo { font-size: 24px; }
-.back-to-top { display: flex; align-items: center; gap: 8px; font-weight: 400; color: var(--text-light); }
+/* 23px of line box, one short of the 24px minimum. Padding buys the hit area
+   and negative margins hand the space back to the flex row, so the footer
+   keeps its original height and the label does not move. */
+.back-to-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+  color: var(--text-light);
+  padding: 4px 0;
+  margin-block: -4px;
+}
 .back-to-top svg { width: 15px; height: 15px; }
 
 /* ---------- Project detail page ---------- */
 .project-hero { padding: 168px 0 56px; }
-.project-back { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 600; margin-bottom: 24px; font-size: 0.9rem; }
+/* Same one-pixel-short line box as .back-to-top. Here nothing else sets the
+   height, so the padding is cancelled by the margins: -4px on top and 24-4 on
+   the bottom leave the link and the h1 below it exactly where they were. */
+.project-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 4px 0;
+  margin-top: -4px;
+  margin-bottom: 20px;
+}
 .project-hero h1 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 18px; max-width: 700px; }
 .project-hero p { color: var(--text-light); font-size: 1.05rem; max-width: 640px; }
 .project-cover { aspect-ratio: 16/9; background: var(--dark); border-radius: var(--radius-md); margin-bottom: 64px; }
