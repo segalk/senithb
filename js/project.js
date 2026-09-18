@@ -354,32 +354,57 @@
     },
     {
       id: 7,
-      title: 'Heritage Illustration System for Decryptogen',
+      title: 'Heritage as a technology brand \u2014 illustration system and exhibition design for Decryptogen',
       category: 'Branding',
-      summary: 'Sri Lankan heritage motifs split down the middle \u2014 one half hand-painted, one half engineered \u2014 carried from a website hero to a trade-show stand.',
+      summary: 'A client brief asked for Sri Lankan heritage motifs fused with technology. The answer was a single visual device \u2014 one object, half hand-painted tradition and half engineered line work \u2014 that states the company\'s positioning without a word of copy, and survives being scaled from a browser hero to a trade-show wall.',
       client: 'Decryptogen',
       clientUrl: 'https://decryptogen.com',
+      product: 'Website hero illustrations, later applied to a three-wall exhibition stall',
+      role: 'Illustration and art direction \u2014 three hero illustrations; exhibition stall design',
       timeline: '2024',
+      tools: 'Adobe Illustrator, Adobe Photoshop',
 
-      // ---------------------------------------------------------------
-      // TODO(Senith): everything below is a placeholder awaiting your copy.
-      // Replace each string in place; the keys and their order already match
-      // the other entries, so nothing else needs touching.
-      //
-      // Images: drop files in images/work/decryptogen/ and point `cover` at
-      // one of them, then add the rest to `gallery` as
-      // { src: '...', alt: '...' } in the same shape the other projects use.
-      // Card thumbnail is a separate slot -- see the TODO in index.html.
-      // ---------------------------------------------------------------
-      role: 'TODO: your role on this project',
-      tools: 'TODO: tools used',
+      // TODO(Senith): imagery. Drop files in images/work/decryptogen/, then set
+      // `cover` to one of them and add the rest to `gallery` as
+      // { src: '...', alt: '...' }. The card thumbnail is a separate slot --
+      // see the TODO in index.html. Everything else on this page is final copy.
       cover: null,
-      overview: 'TODO: overview copy.',
-      challenge: 'TODO: challenge copy.',
-      solution: 'TODO: solution copy.',
-      highlights: ['TODO: highlight one', 'TODO: highlight two', 'TODO: highlight three'],
-      results: 'TODO: results copy.',
-      gallery: []
+      gallery: [],
+
+      overview: 'Decryptogen is an independent digital transformation firm \u2014 data, AI, DevOps and software engineering for enterprise clients. They describe themselves on their own site as \u201cyour trusted independent digital transformation specialists.\u201d The brief came from them, not from me: build the brand\'s visual identity on Sri Lankan heritage motifs fused with technology. My job was to work out what that actually looks like when it has to sit behind a headline, hold a homepage, and later fill a wall.',
+      challenge: 'That\'s the real problem in a brief like this. \u201cHeritage meets technology\u201d is easy to say and easy to do badly \u2014 usually as a traditional image with some circuitry pasted on top, which reads as decoration rather than meaning. The direction had to earn its place.',
+      solution: 'I settled on one structural idea and let it carry everything: a single object, split down its vertical axis. One half rendered as traditional craft \u2014 hand-painted colour, ornamental pattern, the forms as they actually appear in Sri Lankan visual culture. The other half rebuilt as engineered line work: white strokes on black, panel joints, circuit traces, the vocabulary of a technical drawing. Not two things beside each other. One thing, seen two ways at once. That matters, because it is the company\'s positioning stated as a picture. A firm whose work is transformation isn\'t replacing what a client has; it\'s the same organisation with an engineered structure underneath. The split form argues that in a single glance, before anyone reads the headline sitting next to it. The colour system does the rest of the work: a magenta-to-orange gradient against black, with the technical half in white and violet line. Black was the right ground for two reasons \u2014 the gradient reaches its highest chroma against it, and the white line work reads as drawn light rather than as ink.',
+      highlights: [
+        'The Raksha mask \u2014 a bird-form devil-dance mask, split so the flame-like headdress continues across the divide: hand-painted plumes on the left, faceted blades and circuitry on the right. The loudest of the three, and the primary hero',
+        'The sea turtle \u2014 the same split applied to a form with radial symmetry. Shell mandala panels become segmented armour plating; flippers become jointed mechanical limbs. Ornamental suns orbit the left half and the right half answers with technical rosettes',
+        'The dancer \u2014 deliberately breaks the device rather than repeating it. A traditional drummer is paired with a constellation counterpart, the same body redrawn as a node-and-line network reaching across a gap, both inside a concentric dial'
+      ],
+      results: 'The illustrations run as the rotating hero on the Decryptogen homepage, holding the right-hand half of the frame beside the headline. The client later asked for an exhibition stall, and I designed it using the same system \u2014 three walls and a counter, with the composition and hierarchy mine.',
+      sections: [
+        {
+          heading: 'Three subjects, three variations',
+          body: 'Varying the third piece was the point. Three identical split-form illustrations would have read as a template being applied. Restating the same idea through a different structure is what turns three drawings into a system.'
+        },
+        {
+          heading: 'From screen to stall',
+          body: 'One illustration per wall. A visitor walking past a trade-show stand doesn\'t read; they scan. Three walls carrying three separate arguments, each anchored by one image, gives someone a single idea per glance. The turtle carries the company introduction and its figures, the mask carries the proposition and the service list, the dancer carries the positioning statement and contact details. The middle wall inverts. Walls one and three sit on black with the illustrations in full colour; wall two flips to the gradient as ground with the artwork in white line. That inversion isn\'t styling \u2014 it\'s what makes the centre of the stand read as the entrance from across a hall, with the flanking walls receding as supporting material. High-chroma colour on black holds at distance, and the line work is vector, so it survives being enlarged from a browser hero to something several metres wide. That wasn\'t luck \u2014 building the technical halves as line rather than texture is the decision that made the later application possible.'
+        },
+        {
+          heading: 'What I\'d watch',
+          body: 'The hero crop. On the homepage, the service-card panel overlaps the lower portion of the illustrations \u2014 the mask\'s jaw sits behind the card, and one service label lands across its teeth. The artwork was drawn as a complete composition; the page places a component on top of it. If I were revisiting this, I\'d deliver a hero-specific crop with a defined safe area rather than letting a full illustration be cropped by a layout it didn\'t anticipate. Small type on the flanking walls. The body copy on walls one and three is set small against black. At stand-reading distance that\'s a real question, and it\'s the kind of thing worth testing at full scale on a print proof rather than judging on a monitor. The source material deserves care. Raksha masks and Kandyan drumming are living traditions, not ornament. The treatment keeps the traditional halves rendered faithfully \u2014 the forms, the patterns and the colour logic are not abstracted away to make them fit a tech aesthetic. The technical half is what adapts.'
+        },
+        {
+          heading: 'Credits and scope',
+          items: [
+            'Mine: the three illustrations, the split-form device, the colour system, and the exhibition stall design \u2014 composition, hierarchy, and how the artwork carries across three walls and a counter.',
+            'The client\'s: the brief and its heritage-meets-technology direction, the company copy, the service descriptions and the figures shown on the stand.',
+            'Not mine: the website design and build. I supplied the artwork that the site uses.'
+          ],
+          links: [
+            { label: 'Live site \u2014 decryptogen.com', url: 'https://decryptogen.com/' }
+          ]
+        }
+      ]
     }
   ].map(function (p) {
     p.summary = p.summary || 'Simplifying wayfinding across a dense enterprise platform.';
