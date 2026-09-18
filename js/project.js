@@ -148,10 +148,26 @@
       highlights: ['Mosaic-tile icon in four colors, standing in for folded bed linen', 'Sinhala calligraphic wordmark alongside the Latin brand name', 'Reversed white-on-black variant for dark backgrounds'],
       results: 'Adopted as the brand\'s primary mark — used as the Facebook page profile icon since 2014 and still in use over a decade later. Rolled out onto real product packaging: a fold-out product tag featuring the logo alongside wash-care instructions, a size/quantity checklist, contact details, and pricing.',
       gallery: [
-        { src: 'images/work/athirilli/01-primary-logo-lockup.jpg', caption: 'Primary logo' },
-        { src: 'images/work/athirilli/02-swing-tag-mockup.jpg', caption: 'Swing tag — front and back' },
-        { src: 'images/work/athirilli/03-swing-tag-reversed.jpg', caption: 'Logo — reverse white on black, for dark backgrounds' },
-        { src: 'images/work/athirilli/05-product-tag-mockup.jpg', caption: 'Product tag — front and back, on packaging' }
+        {
+          src: 'images/work/athirilli/01-primary-logo-lockup.jpg',
+          alt: 'The Athirilli logo on white: the brand name in flowing black Sinhala calligraphy, with the Latin “Athirilli” set small above and to the left, framed by two diagonal clusters of four overlapping squares in pink, purple, orange and green.',
+          caption: 'Primary logo'
+        },
+        {
+          src: 'images/work/athirilli/02-swing-tag-mockup.jpg',
+          alt: 'Two white swing tags hanging by string against a cork board. The front carries the logo and its mosaic squares; the back is a size chart headed “size / International” with tick boxes from XS to 4XL. Both are edged top and bottom by a dashed rule in the four brand colours.',
+          caption: 'Swing tag — front and back'
+        },
+        {
+          src: 'images/work/athirilli/03-swing-tag-reversed.jpg',
+          alt: 'The same mark reversed for dark backgrounds: the Sinhala wordmark drawn in fine white line on solid black, the mosaic squares keeping their pink, purple, orange and green. The Latin name is dropped in this variant.',
+          caption: 'Logo — reverse white on black, for dark backgrounds'
+        },
+        {
+          src: 'images/work/athirilli/05-product-tag-mockup.jpg',
+          alt: 'Two clear-wrapped bedding packages standing on a pale surface. The left insert reads “Made from 100% cotton” above five icon-led wash-care instructions and a tick-box list of sheet and pillow-cover quantities, with the brand\'s contact details beneath. The right shows the logo and an empty “Price :” field over a sweeping curve of scattered brand-colour squares, the patterned fabric visible through the wrap.',
+          caption: 'Product tag — front and back, on packaging'
+        }
       ]
     },
     {
@@ -648,6 +664,11 @@
         block.style.backgroundImage = 'url(\'' + item.src + '\')';
         block.setAttribute('aria-label', 'View larger image' + (item.caption ? ': ' + item.caption : ''));
         block.dataset.lightboxSrc = item.src;
+        // The lightbox shows the picture and nothing else, so the description
+        // has to travel with it. createInlineFigure already passed alt through;
+        // this path did not, which left every gallery image opening as an
+        // unlabelled <img> however carefully its alt had been written.
+        if (item.alt) block.dataset.lightboxAlt = item.alt;
         if (item.caption) block.dataset.lightboxCaption = item.caption;
       }
       wrapper.appendChild(block);
