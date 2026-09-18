@@ -380,11 +380,15 @@
       timeline: '2024',
       tools: 'Adobe Illustrator, Adobe Photoshop',
 
-      // TODO(Senith): imagery. Drop files in images/work/decryptogen/, then set
-      // `cover` to one of them and add the rest to `gallery` as
-      // { src: '...', alt: '...' }. The card thumbnail is a separate slot --
-      // see the TODO in index.html. Everything else on this page is final copy.
-      cover: null,
+      cover: 'images/work/decryptogen/cover.webp',
+
+      // TODO(Senith): the three illustrations. Drop Mask Final, Turtle Final
+      // and the third piece in images/work/decryptogen/ and add them here as
+      // { src: '...', alt: '...', caption: '...' }. They could not be fetched
+      // from Drive -- every file over about 1 MB failed the transfer, while
+      // the two screenshots came through first time. Exports under 1 MB, or
+      // the files committed directly, will work. The card thumbnail is a
+      // separate slot -- see the TODO in index.html.
       gallery: [],
 
       overview: 'Decryptogen is an independent digital transformation firm \u2014 data, AI, DevOps and software engineering for enterprise clients. They describe themselves on their own site as \u201cyour trusted independent digital transformation specialists.\u201d The brief came from them, not from me: build the brand\'s visual identity on Sri Lankan heritage motifs fused with technology. My job was to work out what that actually looks like when it has to sit behind a headline, hold a homepage, and later fill a wall.',
@@ -399,7 +403,12 @@
       sections: [
         {
           heading: 'Three subjects, three variations',
-          body: 'Varying the third piece was the point. Three identical split-form illustrations would have read as a template being applied. Restating the same idea through a different structure is what turns three drawings into a system.'
+          body: 'Varying the third piece was the point. Three identical split-form illustrations would have read as a template being applied. Restating the same idea through a different structure is what turns three drawings into a system.',
+          image: {
+            src: 'images/work/decryptogen/live-hero-2.webp',
+            alt: 'The Decryptogen homepage with the hero rotated to the third illustration: a figure in the magenta-to-orange gradient in a low lunge with one arm raised, answered by a white node-and-line constellation of the same pose reaching toward it across a gap, both set inside a concentric technical dial on black. The headline \u201cLet\u2019s Empower Your Digital Journey\u201d sits to the left, and the service-card panel crosses the figure\u2019s lower leg.',
+            caption: 'The third illustration in the live rotating hero \u2014 the split device set aside for a figure and its constellation counterpart reaching across a gap.'
+          }
         },
         {
           heading: 'From screen to stall',
