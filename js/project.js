@@ -382,14 +382,28 @@
 
       cover: 'images/work/decryptogen/cover.webp',
 
-      // TODO(Senith): the three illustrations. Drop Mask Final, Turtle Final
-      // and Angampora final in images/work/decryptogen/ and add them here as
-      // { src: '...', alt: '...', caption: '...' }. They could not be fetched
-      // from Drive -- every file over about 1 MB failed the transfer, while
-      // the two screenshots came through first time. Exports under 1 MB, or
-      // the files committed directly, will work. The card thumbnail is a
-      // separate slot -- see the TODO in index.html.
-      gallery: [],
+      // The three illustrations, in the order the highlights introduce them.
+      // Each is cropped to 4:3 so the grid's cover crop has nothing left to
+      // take: the crop was placed around the lit subject in each file, with
+      // clearance measured rather than eyeballed, so the lightbox shows the
+      // whole artwork and only dead black was removed.
+      gallery: [
+        {
+          src: 'images/work/decryptogen/raksha-mask.webp',
+          alt: 'A bird-form Raksha devil-dance mask on black, split down its vertical axis. The left half is hand-painted: a flame-like headdress of magenta-to-orange plumes with ornamental banding, a blue-petalled eye, and yellow teeth below. The right half redraws the same form in white line \u2014 the plumes become faceted blades, the face becomes panel joints and rivets, and circuit traces run out into the background behind a faint mandala.',
+          caption: 'The Raksha mask \u2014 the primary hero'
+        },
+        {
+          src: 'images/work/decryptogen/sea-turtle.webp',
+          alt: 'A sea turtle on black, split down its vertical axis. The left half is hand-painted: shell panels filled with pink and coral mandala motifs, a patterned flipper, and ornamental suns orbiting the body. The right half is white line work \u2014 the same shell as segmented armour plating, the flippers as jointed mechanical limbs, and the suns answered by technical rosettes.',
+          caption: 'The sea turtle \u2014 the same split on a radially symmetrical form'
+        },
+        {
+          src: 'images/work/decryptogen/angampora.webp',
+          alt: 'An Angampora fighter rendered in a magenta-to-orange gradient, crouched low with one arm raised holding an ornamental disc and a curved blade at their back, set inside a concentric technical dial. To the right, across a gap, the same pose is rebuilt as a white node-and-line constellation on black.',
+          caption: 'Angampora \u2014 the device broken rather than repeated'
+        }
+      ],
 
       overview: 'Decryptogen is an independent digital transformation firm \u2014 data, AI, DevOps and software engineering for enterprise clients. They describe themselves on their own site as \u201cyour trusted independent digital transformation specialists.\u201d The brief came from them, not from me: build the brand\'s visual identity on Sri Lankan heritage motifs fused with technology. My job was to work out what that actually looks like when it has to sit behind a headline, hold a homepage, and later fill a wall.',
       challenge: 'That\'s the real problem in a brief like this. \u201cHeritage meets technology\u201d is easy to say and easy to do badly \u2014 usually as a traditional image with some circuitry pasted on top, which reads as decoration rather than meaning. The direction had to earn its place.',
