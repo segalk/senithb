@@ -246,7 +246,7 @@
           heading: 'Sources and disclosure',
           body: 'Public product documentation is included as contextual reference for the shipped experience. No internal design files, research materials, prototypes or proprietary artefacts are included.',
           links: [
-            { label: 'Configuring list elements — IFS technical documentation', url: 'https://docs.ifs.com/techdocs/24r1/040_tailoring/250_lobby_configurations/040_element_designer/070_list_element/' },
+            { label: 'Conditional formatting — IFS technical documentation', url: 'https://docs.ifs.com/techdocs/24r1/060_development/022_user_interface/030_aurena_dev/130_aurena_component_reference/120_client_controls/conditional_formatting/' },
             { label: 'Conditional Formatting — IFS Community', url: 'https://community.ifs.com/framework-experience-infrastructure-cloud-integration-dev-tools-50/conditional-formatting-53809' },
             { label: 'Formatting capabilities in IFS Cloud — IFS Community', url: 'https://community.ifs.com/framework-experience-infrastructure-cloud-integration-dev-tools-50/regarding-formatting-capabilities-in-ifs-cloud-24r2-67489' }
           ]
@@ -374,7 +374,7 @@
       category: 'Branding',
       summary: 'A client brief asked for Sri Lankan heritage motifs fused with technology. The answer was a single visual device \u2014 one object, half hand-painted tradition and half engineered line work \u2014 that states the company\'s positioning without a word of copy, and survives being scaled from a browser hero to a trade-show wall.',
       client: 'Decryptogen',
-      clientUrl: 'https://decryptogen.com',
+      clientUrl: 'https://decryptogen.com/',
       product: 'Website hero illustrations, later applied to a three-wall exhibition stall',
       role: 'Illustration and art direction \u2014 three hero illustrations; exhibition stall design',
       timeline: '2024',
